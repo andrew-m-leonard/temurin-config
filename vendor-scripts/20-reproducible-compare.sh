@@ -35,9 +35,9 @@ set -euo pipefail
 ################################################################################
 
 # Source shared utilities from ci-adoptium-pipelines (resolved via PIPELINE_ROOT)
-# shellcheck source=scripts/lib/logging-utils.sh
+# shellcheck disable=SC1091
 source "${PIPELINE_ROOT}/scripts/lib/logging-utils.sh"
-# shellcheck source=scripts/lib/config-utils.sh
+# shellcheck disable=SC1091
 source "${PIPELINE_ROOT}/scripts/lib/config-utils.sh"
 
 log_section "Stage 20: Temurin Reproducible Build Comparison"

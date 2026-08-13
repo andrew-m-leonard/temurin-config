@@ -2,6 +2,7 @@
   "threshold": 1,
   "ignore": [
     "**/*.groovy",
+    "**/configurations/**",
     "configurations/**"
   ]
 }

@@ -41,7 +41,7 @@ set -euo pipefail
 #   the ci-adoptium-pipelines repo. Falls back to WORKSPACE if not set.
 # ---------------------------------------------------------------------------
 PIPELINE_LIB="${PIPELINE_ROOT:-${WORKSPACE}}/scripts/lib"
-# shellcheck source=scripts/lib/config-utils.sh
+# shellcheck disable=SC1091
 source "${PIPELINE_LIB}/config-utils.sh"
 
 echo "=== Temurin SBOM Validation Stage ==="
