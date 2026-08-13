@@ -34,10 +34,10 @@ set -euo pipefail
 #
 ################################################################################
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
 # Source shared utilities from ci-adoptium-pipelines (resolved via PIPELINE_ROOT)
+# shellcheck source=scripts/lib/logging-utils.sh
 source "${PIPELINE_ROOT}/scripts/lib/logging-utils.sh"
+# shellcheck source=scripts/lib/config-utils.sh
 source "${PIPELINE_ROOT}/scripts/lib/config-utils.sh"
 
 log_section "Stage 20: Temurin Reproducible Build Comparison"
@@ -259,7 +259,7 @@ cd "${COMPARE_WORKSPACE}"
 if bash "${REPRO_COMPARE_SCRIPT}" "${VARIANT}" "${UPSTREAM_JDK_DIR}" "${VARIANT}" "${BUILT_JDK_DIR}" "${REPRO_OS}" | tee "${COMPARE_OUTPUT}"; then
     log_info "SUCCESS: Build is 100% reproducible"
     if [ -f "${COMPARE_WORKSPACE}/ReproduciblePercent" ]; then
-        PERCENT=$(cat "${COMPARE_WORKSPACE}/ReproduciblePercent" | tr -d '[:space:]')
+        PERCENT=$(tr -d '[:space:]' < "${COMPARE_WORKSPACE}/ReproduciblePercent")
         log_info "Reproducibility: ${PERCENT}%"
     fi
 else

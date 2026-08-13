@@ -1,7 +1,7 @@
 
-Vendor configuration repository for Eclipse Temurin OpenJDK builds. Consumed at runtime by the [ci-adoptium-pipelines](https://github.com/adoptium/ci-adoptium-pipelines) build system.
+Vendor configuration repository for Eclipse Temurin OpenJDK builds. Consumed at runtime by the [ci-adoptium-pipelines](https://github.com/adoptium/ci-adoptium-pipelines) build tool.
 
-This repository implements the code/config separation pattern: all pipeline *code* lives in `ci-adoptium-pipelines`; all Temurin-specific *configuration* and *stage overrides* live here. The pipeline clones this repo at the start of every build (Initialize stage) via the `CONFIG_REPO_URL` / `CONFIG_REPO_BRANCH` parameters.
+This repository implements the code/config separation pattern: all pipeline *code* lives in `ci-adoptium-pipelines`; all Temurin-specific *configuration* and *stage overrides* live here. The pipeline clones this repository at the start of every build (Initialize stage) via the `CONFIG_REPO_URL` / `CONFIG_REPO_BRANCH` parameters.
 
 ---
 
@@ -43,10 +43,10 @@ Top-level file read by the Launch pipeline (`Jenkinsfile.launch`) and the local 
 | `defaultVariant` | Variant string (`"temurin"`) used when variant-keyed config fields are resolved |
 | `defaultScmReference` | Default SCM ref/tag — empty means use the version's default branch |
 | `configFilePrefix` / `configFileSuffix` | Template for locating per-version config files (e.g. `"configurations/"` + `"_pipeline_config.json"`) |
-| `repository.url` | `ci-adoptium-pipelines` repo URL |
+| `repository.url` | `ci-adoptium-pipelines` repository URL |
 | `repository.branch` | Pipeline code branch |
-| `repository.buildRepoUrl` / `buildBranch` | `temurin-build` repo URL and branch |
-| `repository.aqaRepoUrl` / `aqaBranch` | `aqa-tests` repo URL and branch |
+| `repository.buildRepoUrl` / `buildBranch` | `temurin-build` repository URL and branch |
+| `repository.aqaRepoUrl` / `aqaBranch` | `aqa-tests` repository URL and branch |
 
 ### `jenkins_job_config.json`
 
@@ -194,7 +194,7 @@ jq empty ../ci-temurin-config/configurations/jdk21_pipeline_config.json
 
 ## Related Documentation
 
-- [ci-adoptium-pipelines](https://github.com/adoptium/ci-adoptium-pipelines) — pipeline code
+- [ci-adoptium-pipelines](https://github.com/adoptium/ci-adoptium-pipelines) — pipeline repository
 - [docs/CODE_CONFIG_SEPARATION.md](https://github.com/adoptium/ci-adoptium-pipelines/blob/main/docs/CODE_CONFIG_SEPARATION.md) — config repo schema reference
 - [docs/PIPELINE_RUNNER_GUIDE.md](https://github.com/adoptium/ci-adoptium-pipelines/blob/main/docs/PIPELINE_RUNNER_GUIDE.md) — local runner CLI reference
 - [docs/CI_AGNOSTIC_ARCHITECTURE.md](https://github.com/adoptium/ci-adoptium-pipelines/blob/main/docs/CI_AGNOSTIC_ARCHITECTURE.md) — pipeline architecture overview

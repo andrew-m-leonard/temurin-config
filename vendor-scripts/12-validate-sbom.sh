@@ -41,6 +41,7 @@ set -euo pipefail
 #   the ci-adoptium-pipelines repo. Falls back to WORKSPACE if not set.
 # ---------------------------------------------------------------------------
 PIPELINE_LIB="${PIPELINE_ROOT:-${WORKSPACE}}/scripts/lib"
+# shellcheck source=scripts/lib/config-utils.sh
 source "${PIPELINE_LIB}/config-utils.sh"
 
 echo "=== Temurin SBOM Validation Stage ==="
@@ -85,7 +86,7 @@ if [ -z "${JAVA_VERSION:-}" ]; then
 fi
 
 # Extract numeric version for validateSBOM.sh (e.g., "jdk21u" -> "21")
-JDK_NUMERIC_VERSION=$(echo "${JAVA_VERSION}" | sed 's/[^0-9]//g')
+JDK_NUMERIC_VERSION="${JAVA_VERSION//[^0-9]/}"
 echo "Extracted numeric JDK version: ${JDK_NUMERIC_VERSION}"
 
 if [ -z "${SCM_REF:-}" ]; then

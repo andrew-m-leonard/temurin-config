@@ -34,7 +34,9 @@ set -euo pipefail
 #   the ci-adoptium-pipelines repo. Falls back to WORKSPACE if not set.
 # ---------------------------------------------------------------------------
 PIPELINE_LIB="${PIPELINE_ROOT:-${WORKSPACE}}/scripts/lib"
+# shellcheck source=scripts/lib/logging-utils.sh
 source "${PIPELINE_LIB}/logging-utils.sh"
+# shellcheck source=scripts/lib/config-utils.sh
 source "${PIPELINE_LIB}/config-utils.sh"
 
 # ---------------------------------------------------------------------------
@@ -254,6 +256,7 @@ EOF
 # ---------------------------------------------------------------------------
 # Error trap
 # ---------------------------------------------------------------------------
+# shellcheck disable=SC2317  # error_handler is invoked indirectly via trap
 error_handler() {
     log_error "Smoke test stage failed at line $1"
     exit 1
