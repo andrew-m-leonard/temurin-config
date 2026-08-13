@@ -1,3 +1,4 @@
+# ci-temurin-config
 
 Vendor configuration repository for Eclipse Temurin OpenJDK builds. Consumed at runtime by the [ci-adoptium-pipelines](https://github.com/adoptium/ci-adoptium-pipelines) build tool.
 
@@ -7,7 +8,7 @@ This repository implements the code/config separation pattern: all pipeline *cod
 
 ## Repository Structure
 
-```
+```text
 ci-temurin-config/
 ├── adoptium_pipeline_config.json        # Top-level pipeline defaults and repository URLs
 ├── jenkins_job_config.json              # Jenkins job DSL settings (log rotation, default parameters)
