@@ -1,0 +1,101 @@
+{
+  "version": "jdk16",
+  "buildConfigurations": {
+    "x86-64_mac": {
+      "os": "mac",
+      "arch": "x64",
+      "additionalNodeLabels": "sw.os.mac.10_14",
+      "configureArgs": "--enable-dtrace"
+    },
+    "x86-64_linux": {
+      "os": "linux",
+      "arch": "x64",
+      "dockerImage": {
+        "hotspot": "adoptopenjdk/centos6_build_image",
+        "openj9": "adoptopenjdk/centos7_build_image"
+      },
+      "dockerFile": {
+        "openj9": "pipelines/build/dockerFiles/cuda.dockerfile"
+      },
+      "configureArgs": {
+        "openj9": "--enable-dtrace --enable-jitserver",
+        "hotspot": "--enable-dtrace"
+      }
+    },
+    "x86-64_alpine-linux": {
+      "os": "alpine-linux",
+      "arch": "x64",
+      "dockerImage": "adoptopenjdk/alpine3_build_image",
+      "configureArgs": "--enable-headless-only=yes"
+    },
+    "aarch64_alpine-linux": {
+      "os": "alpine-linux",
+      "arch": "aarch64",
+      "dockerImage": "adoptopenjdk/alpine3_build_image",
+      "configureArgs": "--enable-headless-only=yes"
+    },
+    "x86-64_windows": {
+      "os": "windows",
+      "arch": "x64",
+      "additionalNodeLabels": "sw.os.windows.2012&&sw.tool.vs.2017"
+    },
+    "x86-32_windows": {
+      "os": "windows",
+      "arch": "x86-32",
+      "additionalNodeLabels": "sw.os.windows.2012&&sw.tool.vs.2017",
+      "buildArgs": {
+        "hotspot": "--jvm-variant client,server"
+      }
+    },
+    "ppc64_aix": {
+      "os": "aix",
+      "arch": "ppc64",
+      "additionalNodeLabels": {
+        "hotspot": "sw.tool.xlc.16&&sw.os.aix.7_1",
+        "openj9": "sw.tool.xlc.16&&sw.os.aix.7_1"
+      },
+      "cleanWorkspaceAfterBuild": true
+    },
+    "s390x_linux": {
+      "os": "linux",
+      "arch": "s390x",
+      "configureArgs": "--enable-dtrace"
+    },
+    "ppc64le_linux": {
+      "os": "linux",
+      "arch": "ppc64le",
+      "additionalNodeLabels": "sw.os.centos.7",
+      "configureArgs": {
+        "hotspot": "--enable-dtrace",
+        "openj9": "--enable-dtrace --enable-jitserver"
+      }
+    },
+    "aarch64_linux": {
+      "os": "linux",
+      "arch": "aarch64",
+      "dockerImage": "adoptopenjdk/centos7_build_image",
+      "configureArgs": "--enable-dtrace",
+      "testDynamic": false
+    },
+    "arm_linux": {
+      "os": "linux",
+      "arch": "arm",
+      "configureArgs": "--enable-dtrace"
+    }
+  },
+  "targetConfigurations": [
+    "x86-64_mac",
+    "x86-64_linux",
+    "x86-64_alpine-linux",
+    "aarch64_alpine-linux",
+    "x86-64_windows",
+    "x86-32_windows",
+    "ppc64_aix",
+    "s390x_linux",
+    "ppc64le_linux",
+    "aarch64_linux",
+    "arm_linux"
+  ],
+  "openjdkVersion": "jdk16u",
+  "enabled": false
+}

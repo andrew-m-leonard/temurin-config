@@ -1,0 +1,26 @@
+{
+  "stageId": "20-reproducible-compare",
+  "stageDisabled": false,
+  "stageCondition": [],
+  "description": "Temurin reproducible build comparison stage. SCM_REF must be specified — it identifies the exact published Adoptium binary to compare against. BUILD_REF pins the temurin-build branch used for the comparison tooling.",
+  "parameterGroups": [
+    {
+      "name": "Source Control",
+      "description": "Refs that control what is checked out and compared. SCM_REF is mandatory for this stage.",
+      "parameters": [
+        {
+          "name": "SCM_REF",
+          "type": "string",
+          "default": "",
+          "description": "Git tag/ref identifying the build to compare (e.g. jdk-21.0.2+13). Must not be empty — this stage cannot run without a specific version to compare against."
+        },
+        {
+          "name": "BUILD_REF",
+          "type": "string",
+          "default": "",
+          "description": "Git branch or tag for the temurin-build repository (comparison tooling). Empty = default defined in adoptium_pipeline_config.json."
+        }
+      ]
+    }
+  ]
+}

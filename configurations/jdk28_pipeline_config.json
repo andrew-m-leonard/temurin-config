@@ -1,0 +1,168 @@
+{
+  "version": "jdk28",
+  "buildConfigurations": {
+    "x86-64_mac": {
+      "os": "mac",
+      "arch": "x64",
+      "additionalNodeLabels": "sw.tool.xcode.15_0_1",
+      "configureArgs": "--enable-dtrace",
+      "buildArgs": {
+        "temurin": "--create-jre-image"
+      }
+    },
+    "x86-64_linux": {
+      "os": "linux",
+      "arch": "x64",
+      "dockerImage": "adoptopenjdk/centos7_build_image",
+      "dockerFile": {
+        "openj9": "pipelines/build/dockerFiles/cuda.dockerfile"
+      },
+      "configureArgs": {
+        "openj9": "--enable-dtrace",
+        "temurin": "--enable-dtrace"
+      },
+      "buildArgs": {
+        "temurin": "--create-source-archive --create-jre-image --enable-sbom-strace --use-adoptium-devkit gcc-14.2.0-Centos7.9.2009-b01",
+        "hotspot": "--create-jre-image --use-adoptium-devkit gcc-14.2.0-Centos7.9.2009-b01"
+      }
+    },
+    "x86-64_alpine-linux": {
+      "os": "alpine-linux",
+      "arch": "x64",
+      "dockerImage": "adoptopenjdk/alpine3_build_image",
+      "configureArgs": "--enable-headless-only=yes",
+      "buildArgs": {
+        "temurin": "--create-jre-image --enable-sbom-strace"
+      }
+    },
+    "aarch64_alpine-linux": {
+      "os": "alpine-linux",
+      "arch": "aarch64",
+      "dockerImage": "adoptopenjdk/alpine3_build_image",
+      "configureArgs": {
+        "openj9": "--enable-headless-only=yes",
+        "temurin": "--enable-headless-only=yes --with-jobs=4"
+      },
+      "buildArgs": {
+        "temurin": "--create-jre-image --enable-sbom-strace"
+      }
+    },
+    "x86-64_windows": {
+      "os": "windows",
+      "arch": "x64",
+      "dockerImage": "windows2022_build_image",
+      "dockerRegistry": "https://adoptium.azurecr.io",
+      "dockerCredential": "bbb9fa70-a1de-4853-b564-5f02193329ac",
+      "additionalNodeLabels": "sw.os.windows.2022&&sw.tool.vs.2022",
+      "buildArgs": {
+        "temurin": "--create-jre-image --use-adoptium-devkit vs2022_redist_14.40.33807_10.0.26100.1742"
+      }
+    },
+    "ppc64_aix": {
+      "os": "aix",
+      "arch": "ppc64",
+      "additionalNodeLabels": {
+        "temurin": "sw.tool.openxl.17&&sw.os.aix.7_2",
+        "openj9": "sw.tool.xlc.16&&sw.os.aix.7_1"
+      },
+      "cleanWorkspaceAfterBuild": true,
+      "buildArgs": {
+        "temurin": "--create-jre-image"
+      }
+    },
+    "s390x_linux": {
+      "os": "linux",
+      "arch": "s390x",
+      "dockerImage": "rhel7_build_image",
+      "buildArgs": {
+        "temurin": "--create-jre-image --enable-sbom-strace --use-adoptium-devkit gcc-14.2.0-Centos7.9.2009-b01"
+      }
+    },
+    "ppc64le_linux": {
+      "os": "linux",
+      "arch": "ppc64le",
+      "dockerImage": "adoptopenjdk/centos7_build_image",
+      "configureArgs": {
+        "openj9": "--enable-dtrace"
+      },
+      "buildArgs": {
+        "temurin": "--create-jre-image --enable-sbom-strace --use-adoptium-devkit gcc-14.2.0-Centos7.9.2009-b01"
+      }
+    },
+    "aarch64_linux": {
+      "os": "linux",
+      "arch": "aarch64",
+      "dockerImage": "adoptopenjdk/centos7_build_image",
+      "configureArgs": {
+        "openj9": "--enable-dtrace",
+        "temurin": "--enable-dtrace --with-jobs=4"
+      },
+      "buildArgs": {
+        "temurin": "--create-jre-image --enable-sbom-strace --use-adoptium-devkit gcc-14.2.0-Centos7.6.1810-b01",
+        "hotspot": "--create-jre-image --use-adoptium-devkit gcc-14.2.0-Centos7.6.1810-b01"
+      }
+    },
+    "aarch64_mac": {
+      "os": "mac",
+      "arch": "aarch64",
+      "additionalNodeLabels": "sw.tool.xcode.15_0_1",
+      "buildArgs": {
+        "temurin": "--create-jre-image"
+      }
+    },
+    "riscv64_linux": {
+      "os": "linux",
+      "arch": "riscv64",
+      "crossCompile": "qemustatic",
+      "dockerImage": "adoptopenjdk/ubuntu2004_build_image:linux-riscv64",
+      "dockerArgs": "--platform linux/riscv64",
+      "configureArgs": "--enable-headless-only=yes --enable-dtrace",
+      "buildArgs": {
+        "temurin": "--create-jre-image --use-adoptium-devkit gcc-14.2.0-Fedora_28-b00"
+      }
+    },
+    "aarch64_windows": {
+      "os": "windows",
+      "arch": "aarch64",
+      "dockerImage": "windows2022_build_image",
+      "dockerRegistry": "https://adoptium.azurecr.io",
+      "dockerCredential": "bbb9fa70-a1de-4853-b564-5f02193329ac",
+      "crossCompile": "x64",
+      "additionalNodeLabels": "sw.os.windows.2022&&sw.tool.vs.2022",
+      "buildArgs": {
+        "temurin": "--create-jre-image --cross-compile --use-adoptium-devkit vs2022_redist_14.40.33807_10.0.26100.1742"
+      }
+    },
+    "arm_linux": {
+      "os": "linux",
+      "arch": "arm",
+      "crossCompile": "aarch64",
+      "dockerImage": "adoptopenjdk/ubuntu1604_build_image",
+      "dockerArgs": "--platform linux/arm/v7",
+      "configureArgs": {
+        "openj9": "--enable-dtrace",
+        "temurin": "--enable-dtrace --with-jobs=4"
+      },
+      "buildArgs": {
+        "temurin": "--create-jre-image --enable-sbom-strace"
+      }
+    }
+  },
+  "targetConfigurations": [
+    "x86-64_mac",
+    "x86-64_linux",
+    "x86-64_alpine-linux",
+    "aarch64_alpine-linux",
+    "x86-64_windows",
+    "ppc64_aix",
+    "s390x_linux",
+    "ppc64le_linux",
+    "aarch64_linux",
+    "aarch64_mac",
+    "riscv64_linux",
+    "aarch64_windows",
+    "arm_linux"
+  ],
+  "openjdkVersion": "jdk28u",
+  "enabled": true
+}

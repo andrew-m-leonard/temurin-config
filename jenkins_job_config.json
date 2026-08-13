@@ -1,0 +1,43 @@
+{
+  "jenkinsfilePath": "ci/jenkins/Jenkinsfile.declarative",
+  "pipelineTimeoutHours": 8,
+  "activeNodeTimeoutMinutes": 10,
+  "pipelineBaseFolder": "temurin-pipelines",
+  "jobConfiguration": {
+    "defaultParameters": {
+      "VARIANT": "temurin",
+      "CLEAN_WORKSPACE_AFTER_STAGE": true,
+      "CREATE_SBOM": true,
+      "RUN_TESTS": true,
+      "ENABLE_INSTALLERS": true,
+      "SIGN_ARTIFACTS": true,
+      "PUBLISH_ARTIFACTS": false,
+      "RUN_REPRODUCIBLE_COMPARE": false
+    },
+    "logRotation": {
+      "daysToKeep": 30,
+      "numToKeep": 50,
+      "artifactDaysToKeep": 7,
+      "artifactNumToKeep": 10
+    }
+  },
+  "stageAgentLabels": {
+    "__any__": "ci.role.worker",
+    "01-initialize": "ci.role.worker",
+    "02-build": "ci.role.build&&sw.os.{os}&&hw.arch.{arch}",
+    "03-internal-code-sign": "eclipse-codesign",
+    "04-assemble-images": "ci.role.build&&sw.os.{os}&&hw.arch.{arch}",
+    "06-post-build-code-sign": "ci.role.worker",
+    "07-installer": "ci.role.build&&sw.os.{os}&&hw.arch.{arch}",
+    "08-code-sign-installer": "ci.role.worker",
+    "09-sbom-sign": "ci.role.worker",
+    "10-digital-artifact-sign": "ci.role.worker",
+    "11-verify-signing": "ci.role.worker",
+    "12-validate-sbom": "ci.role.build&&sw.os.{os}&&hw.arch.{arch}",
+    "13-smoke-tests": "ci.role.build&&sw.os.{os}&&hw.arch.{arch}",
+    "14-aqa-tests": "ci.role.build&&hw.arch.{arch}",
+    "15-tck-tests": "ci.role.build&&hw.arch.{arch}",
+    "16-publish": "ci.role.worker",
+    "20-reproducible-compare": "ci.role.build&&sw.os.{os}&&hw.arch.{arch}"
+  }
+}

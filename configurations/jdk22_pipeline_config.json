@@ -1,0 +1,146 @@
+{
+  "version": "jdk22",
+  "buildConfigurations": {
+    "x86-64_mac": {
+      "os": "mac",
+      "arch": "x64",
+      "additionalNodeLabels": "sw.tool.xcode.15_0_1",
+      "configureArgs": "--enable-dtrace",
+      "buildArgs": {
+        "temurin": "--create-jre-image"
+      }
+    },
+    "x86-64_linux": {
+      "os": "linux",
+      "arch": "x64",
+      "dockerImage": "adoptopenjdk/centos7_build_image",
+      "dockerFile": {
+        "openj9": "pipelines/build/dockerFiles/cuda.dockerfile"
+      },
+      "configureArgs": {
+        "openj9": "--enable-dtrace",
+        "temurin": "--enable-dtrace"
+      },
+      "buildArgs": {
+        "temurin": "--create-source-archive --create-jre-image --enable-sbom-strace --use-adoptium-devkit gcc-11.3.0-Centos7.9.2009-b03"
+      }
+    },
+    "x86-64_alpine-linux": {
+      "os": "alpine-linux",
+      "arch": "x64",
+      "dockerImage": "adoptopenjdk/alpine3_build_image",
+      "configureArgs": "--enable-headless-only=yes",
+      "buildArgs": {
+        "temurin": "--create-jre-image --enable-sbom-strace"
+      }
+    },
+    "aarch64_alpine-linux": {
+      "os": "alpine-linux",
+      "arch": "aarch64",
+      "dockerImage": "adoptopenjdk/alpine3_build_image",
+      "configureArgs": {
+        "openj9": "--enable-headless-only=yes",
+        "temurin": "--enable-headless-only=yes --with-jobs=4"
+      },
+      "buildArgs": {
+        "temurin": "--create-jre-image --enable-sbom-strace"
+      }
+    },
+    "x86-64_windows": {
+      "os": "windows",
+      "arch": "x64",
+      "additionalNodeLabels": "sw.os.windows.2022&&sw.tool.vs.2022",
+      "configureArgs": "--with-ucrt-dll-dir='C:/progra~2/wi3cf2~1/10/Redist/10.0.22621.0/ucrt/DLLs/x64'",
+      "buildArgs": {
+        "temurin": "--create-jre-image"
+      }
+    },
+    "ppc64_aix": {
+      "os": "aix",
+      "arch": "ppc64",
+      "additionalNodeLabels": {
+        "temurin": "sw.tool.openxl.17&&sw.os.aix.7_2",
+        "openj9": "sw.tool.xlc.16&&sw.os.aix.7_1"
+      },
+      "cleanWorkspaceAfterBuild": true,
+      "buildArgs": {
+        "temurin": "--create-jre-image"
+      }
+    },
+    "s390x_linux": {
+      "os": "linux",
+      "arch": "s390x",
+      "dockerImage": "rhel7_build_image",
+      "buildArgs": {
+        "temurin": "--create-jre-image --enable-sbom-strace --use-adoptium-devkit gcc-11.3.0-Centos7.9.2009-b03"
+      }
+    },
+    "ppc64le_linux": {
+      "os": "linux",
+      "arch": "ppc64le",
+      "dockerImage": "adoptopenjdk/centos7_build_image",
+      "configureArgs": {
+        "openj9": "--enable-dtrace"
+      },
+      "buildArgs": {
+        "temurin": "--create-jre-image --enable-sbom-strace --use-adoptium-devkit gcc-11.3.0-Centos7.9.2009-b03"
+      }
+    },
+    "aarch64_linux": {
+      "os": "linux",
+      "arch": "aarch64",
+      "dockerImage": "adoptopenjdk/centos7_build_image",
+      "configureArgs": {
+        "openj9": "--enable-dtrace",
+        "temurin": "--enable-dtrace --with-jobs=4"
+      },
+      "buildArgs": {
+        "temurin": "--create-jre-image --enable-sbom-strace --use-adoptium-devkit gcc-11.3.0-Centos7.6.1810-b03"
+      }
+    },
+    "aarch64_mac": {
+      "os": "mac",
+      "arch": "aarch64",
+      "additionalNodeLabels": "sw.tool.xcode.15_0_1",
+      "buildArgs": {
+        "temurin": "--create-jre-image"
+      }
+    },
+    "riscv64_linux": {
+      "os": "linux",
+      "arch": "riscv64",
+      "crossCompile": "qemustatic",
+      "dockerImage": "adoptopenjdk/ubuntu2004_build_image:linux-riscv64",
+      "dockerArgs": "--platform linux/riscv64",
+      "configureArgs": "--enable-headless-only=yes --enable-dtrace",
+      "buildArgs": {
+        "temurin": "--create-jre-image"
+      }
+    },
+    "aarch64_windows": {
+      "os": "windows",
+      "arch": "aarch64",
+      "crossCompile": "x64",
+      "additionalNodeLabels": "sw.os.windows.2022&&sw.tool.vs.2022",
+      "buildArgs": {
+        "temurin": "--create-jre-image --cross-compile"
+      }
+    }
+  },
+  "targetConfigurations": [
+    "x86-64_mac",
+    "x86-64_linux",
+    "x86-64_alpine-linux",
+    "aarch64_alpine-linux",
+    "x86-64_windows",
+    "ppc64_aix",
+    "s390x_linux",
+    "ppc64le_linux",
+    "aarch64_linux",
+    "aarch64_mac",
+    "riscv64_linux",
+    "aarch64_windows"
+  ],
+  "openjdkVersion": "jdk22u",
+  "enabled": false
+}
