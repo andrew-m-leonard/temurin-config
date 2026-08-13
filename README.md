@@ -196,6 +196,6 @@ jq empty ../ci-temurin-config/configurations/jdk21_pipeline_config.json
 ## Related Documentation
 
 - [ci-adoptium-pipelines](https://github.com/adoptium/ci-adoptium-pipelines) — pipeline repository
-- [docs/CODE_CONFIG_SEPARATION.md](https://github.com/adoptium/ci-adoptium-pipelines/blob/main/docs/CODE_CONFIG_SEPARATION.md) — config repo schema reference
+- [docs/CODE_CONFIG_SEPARATION.md](https://github.com/adoptium/ci-adoptium-pipelines/blob/main/docs/CODE_CONFIG_SEPARATION.md) — config repository schema reference
 - [docs/PIPELINE_RUNNER_GUIDE.md](https://github.com/adoptium/ci-adoptium-pipelines/blob/main/docs/PIPELINE_RUNNER_GUIDE.md) — local runner CLI reference
 - [docs/CI_AGNOSTIC_ARCHITECTURE.md](https://github.com/adoptium/ci-adoptium-pipelines/blob/main/docs/CI_AGNOSTIC_ARCHITECTURE.md) — pipeline architecture overview
