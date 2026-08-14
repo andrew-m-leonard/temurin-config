@@ -71,8 +71,8 @@
   "configFilePrefix": "configurations/",
   "configFileSuffix": "_pipeline_config.json",
   "repository": {
-    "url": "https://github.com/andrew-m-leonard/adoptium-pipelines.git",
-    "branch": "first_code",
+    "url": "https://github.com/adoptium/ci-adoptium-pipelines.git",
+    "branch": "main",
     "credentialsId": "",
     "buildRepoUrl": "https://github.com/adoptium/temurin-build.git",
     "buildBranch": "master",
