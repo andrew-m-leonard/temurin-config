@@ -1,0 +1,20 @@
+{
+  "stageId": "12-validate-sbom",
+  "stageDisabled": false,
+  "stageCondition": [],
+  "description": "Temurin SBOM validation stage parameters. This stage clones temurin-build and delegates to tooling/validateSBOM.sh. The temurin-build repo and branch are read from pipeline-config.json (.repoDefaults.buildRepoUrl / .repoDefaults.buildRef).",
+  "parameterGroups": [
+    {
+      "name": "Source Control",
+      "description": "Refs that pin exactly what source is checked out for this stage. Leave empty to use the defaults defined in adoptium_pipeline_config.json.",
+      "parameters": [
+        {
+          "name": "BUILD_REF",
+          "type": "string",
+          "default": "",
+          "description": "Git branch or tag for the temurin-build repository. Empty = default defined in adoptium_pipeline_config.json."
+        }
+      ]
+    }
+  ]
+}

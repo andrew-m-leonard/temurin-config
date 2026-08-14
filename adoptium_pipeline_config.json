@@ -1,0 +1,82 @@
+{
+  "activeJdkVersions": [
+    {
+      "version": "jdk11",
+      "enabled": true
+    },
+    {
+      "version": "jdk15",
+      "enabled": false
+    },
+    {
+      "version": "jdk16",
+      "enabled": false
+    },
+    {
+      "version": "jdk17",
+      "enabled": true
+    },
+    {
+      "version": "jdk18",
+      "enabled": false
+    },
+    {
+      "version": "jdk19",
+      "enabled": false
+    },
+    {
+      "version": "jdk20",
+      "enabled": false
+    },
+    {
+      "version": "jdk21",
+      "enabled": true
+    },
+    {
+      "version": "jdk22",
+      "enabled": false
+    },
+    {
+      "version": "jdk23",
+      "enabled": false
+    },
+    {
+      "version": "jdk24",
+      "enabled": false
+    },
+    {
+      "version": "jdk25",
+      "enabled": true
+    },
+    {
+      "version": "jdk26",
+      "enabled": true
+    },
+    {
+      "version": "jdk27",
+      "enabled": true
+    },
+    {
+      "version": "jdk28",
+      "enabled": true
+    },
+    {
+      "version": "jdk8",
+      "enabled": true
+    }
+  ],
+  "defaultBuildArgs": "",
+  "defaultConfigureArgs": "",
+  "defaultVariant": "temurin",
+  "configFilePrefix": "configurations/",
+  "configFileSuffix": "_pipeline_config.json",
+  "repository": {
+    "url": "https://github.com/adoptium/ci-adoptium-pipelines.git",
+    "branch": "main",
+    "credentialsId": "",
+    "buildRepoUrl": "https://github.com/adoptium/temurin-build.git",
+    "buildBranch": "master",
+    "aqaRepoUrl": "https://github.com/adoptium/aqa-tests.git",
+    "aqaBranch": "master"
+  }
+}

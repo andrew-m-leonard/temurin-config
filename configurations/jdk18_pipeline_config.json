@@ -1,0 +1,143 @@
+{
+  "version": "jdk18",
+  "buildConfigurations": {
+    "x86-64_mac": {
+      "os": "mac",
+      "arch": "x64",
+      "additionalNodeLabels": "sw.os.mac.10_14",
+      "configureArgs": "--enable-dtrace",
+      "buildArgs": {
+        "temurin": "--create-jre-image"
+      }
+    },
+    "x86-64_linux": {
+      "os": "linux",
+      "arch": "x64",
+      "dockerImage": {
+        "temurin": "adoptopenjdk/centos6_build_image",
+        "openj9": "adoptopenjdk/centos7_build_image"
+      },
+      "dockerFile": {
+        "openj9": "pipelines/build/dockerFiles/cuda.dockerfile"
+      },
+      "configureArgs": {
+        "openj9": "--enable-dtrace --enable-jitserver",
+        "temurin": "--enable-dtrace"
+      },
+      "buildArgs": {
+        "temurin": "--create-source-archive --create-jre-image"
+      }
+    },
+    "x86-64_alpine-linux": {
+      "os": "alpine-linux",
+      "arch": "x64",
+      "dockerImage": "adoptopenjdk/alpine3_build_image",
+      "configureArgs": "--enable-headless-only=yes",
+      "buildArgs": {
+        "temurin": "--create-jre-image"
+      }
+    },
+    "aarch64_alpine-linux": {
+      "os": "alpine-linux",
+      "arch": "aarch64",
+      "dockerImage": "adoptopenjdk/alpine3_build_image",
+      "configureArgs": "--enable-headless-only=yes",
+      "buildArgs": {
+        "temurin": "--create-jre-image"
+      }
+    },
+    "x86-64_windows": {
+      "os": "windows",
+      "arch": "x64",
+      "additionalNodeLabels": "sw.os.windows.2012&&sw.tool.vs.2019",
+      "buildArgs": {
+        "temurin": "--create-jre-image"
+      }
+    },
+    "x86-32_windows": {
+      "os": "windows",
+      "arch": "x86-32",
+      "additionalNodeLabels": "sw.os.windows.2012&&sw.tool.vs.2019",
+      "buildArgs": {
+        "temurin": "--jvm-variant client,server --create-jre-image"
+      }
+    },
+    "ppc64_aix": {
+      "os": "aix",
+      "arch": "ppc64",
+      "additionalNodeLabels": {
+        "temurin": "sw.tool.xlc.16&&sw.os.aix.7_1",
+        "openj9": "sw.tool.xlc.16&&sw.os.aix.7_1"
+      },
+      "cleanWorkspaceAfterBuild": true,
+      "buildArgs": {
+        "temurin": "--create-jre-image"
+      }
+    },
+    "s390x_linux": {
+      "os": "linux",
+      "arch": "s390x",
+      "configureArgs": "--enable-dtrace",
+      "buildArgs": {
+        "temurin": "--create-jre-image"
+      }
+    },
+    "ppc64le_linux": {
+      "os": "linux",
+      "arch": "ppc64le",
+      "additionalNodeLabels": "sw.os.centos.7",
+      "configureArgs": {
+        "temurin": "--enable-dtrace",
+        "openj9": "--enable-dtrace --enable-jitserver"
+      },
+      "buildArgs": {
+        "temurin": "--create-jre-image"
+      }
+    },
+    "aarch64_linux": {
+      "os": "linux",
+      "arch": "aarch64",
+      "dockerImage": "adoptopenjdk/centos7_build_image",
+      "configureArgs": "--enable-dtrace",
+      "testDynamic": false,
+      "buildArgs": {
+        "temurin": "--create-jre-image"
+      }
+    },
+    "aarch64_mac": {
+      "os": "mac",
+      "arch": "aarch64",
+      "additionalNodeLabels": "sw.os.mac.11",
+      "buildArgs": {
+        "temurin": "--create-jre-image"
+      }
+    },
+    "arm_linux": {
+      "os": "linux",
+      "arch": "arm",
+      "crossCompile": "aarch64",
+      "dockerImage": "adoptopenjdk/ubuntu1604_build_image",
+      "dockerArgs": "--platform linux/arm/v7",
+      "configureArgs": "--enable-dtrace",
+      "buildArgs": {
+        "temurin": "--create-jre-image"
+      }
+    }
+  },
+  "targetConfigurations": [
+    "x86-64_mac",
+    "x86-64_linux",
+    "x86-64_alpine-linux",
+    "aarch64_alpine-linux",
+    "x86-64_windows",
+    "x86-32_windows",
+    "ppc64_aix",
+    "s390x_linux",
+    "ppc64le_linux",
+    "aarch64_linux",
+    "aarch64_mac",
+    "arm_linux"
+  ],
+  "openjdkVersion": "jdk18u",
+  "enabled": false
+}

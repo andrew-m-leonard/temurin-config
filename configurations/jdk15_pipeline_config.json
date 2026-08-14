@@ -1,0 +1,135 @@
+{
+  "version": "jdk15",
+  "buildConfigurations": {
+    "x86-64_mac": {
+      "os": "mac",
+      "arch": "x64",
+      "additionalNodeLabels": "sw.os.mac.10_14",
+      "configureArgs": "--enable-dtrace"
+    },
+    "x64MacXL": {
+      "os": "mac",
+      "arch": "x64",
+      "additionalNodeLabels": "sw.os.mac.10_14",
+      "additionalFileNameTag": "macosXL",
+      "configureArgs": "--with-noncompressedrefs --enable-dtrace"
+    },
+    "x86-64_linux": {
+      "os": "linux",
+      "arch": "x64",
+      "dockerImage": {
+        "hotspot": "adoptopenjdk/centos6_build_image",
+        "openj9": "adoptopenjdk/centos7_build_image"
+      },
+      "dockerFile": {
+        "openj9": "pipelines/build/dockerFiles/cuda.dockerfile"
+      },
+      "configureArgs": {
+        "openj9": "--enable-dtrace --enable-jitserver",
+        "hotspot": "--enable-dtrace"
+      }
+    },
+    "x64LinuxXL": {
+      "os": "linux",
+      "arch": "x64",
+      "dockerImage": "adoptopenjdk/centos7_build_image",
+      "dockerFile": {
+        "openj9": "pipelines/build/dockerFiles/cuda.dockerfile"
+      },
+      "additionalFileNameTag": "linuxXL",
+      "configureArgs": "--with-noncompressedrefs --enable-dtrace --enable-jitserver"
+    },
+    "x86-64_windows": {
+      "os": "windows",
+      "arch": "x64",
+      "additionalNodeLabels": "sw.os.windows.2012&&sw.tool.vs.2017"
+    },
+    "x64WindowsXL": {
+      "os": "windows",
+      "arch": "x64",
+      "additionalNodeLabels": "sw.os.windows.2012&&sw.tool.vs.2017",
+      "additionalFileNameTag": "windowsXL",
+      "configureArgs": "--with-noncompressedrefs"
+    },
+    "x86-32_windows": {
+      "os": "windows",
+      "arch": "x86-32",
+      "additionalNodeLabels": "sw.os.windows.2012&&sw.tool.vs.2017",
+      "buildArgs": {
+        "hotspot": "--jvm-variant client,server"
+      }
+    },
+    "ppc64_aix": {
+      "os": "aix",
+      "arch": "ppc64",
+      "additionalNodeLabels": {
+        "hotspot": "sw.tool.xlc.16&&sw.os.aix.7_1",
+        "openj9": "sw.tool.xlc.16&&sw.os.aix.7_1"
+      }
+    },
+    "s390x_linux": {
+      "os": "linux",
+      "arch": "s390x",
+      "configureArgs": "--enable-dtrace"
+    },
+    "s390xLinuxXL": {
+      "os": "linux",
+      "arch": "s390x",
+      "additionalFileNameTag": "linuxXL",
+      "configureArgs": "--with-noncompressedrefs --enable-dtrace"
+    },
+    "ppc64le_linux": {
+      "os": "linux",
+      "arch": "ppc64le",
+      "additionalNodeLabels": "sw.os.centos.7",
+      "configureArgs": {
+        "hotspot": "--enable-dtrace",
+        "openj9": "--enable-dtrace --enable-jitserver"
+      }
+    },
+    "ppc64leLinuxXL": {
+      "os": "linux",
+      "arch": "ppc64le",
+      "additionalNodeLabels": "sw.os.centos.7",
+      "additionalFileNameTag": "linuxXL",
+      "configureArgs": "--with-noncompressedrefs --disable-ccache --enable-dtrace"
+    },
+    "arm_linux": {
+      "os": "linux",
+      "arch": "arm",
+      "configureArgs": "--enable-dtrace"
+    },
+    "aarch64_linux": {
+      "os": "linux",
+      "arch": "aarch64",
+      "dockerImage": "adoptopenjdk/centos7_build_image",
+      "configureArgs": "--enable-dtrace"
+    },
+    "aarch64LinuxXL": {
+      "os": "linux",
+      "dockerImage": "adoptopenjdk/centos7_build_image",
+      "arch": "aarch64",
+      "additionalFileNameTag": "linuxXL",
+      "configureArgs": "--with-noncompressedrefs --enable-dtrace"
+    }
+  },
+  "targetConfigurations": [
+    "x86-64_mac",
+    "x64MacXL",
+    "x86-64_linux",
+    "x64LinuxXL",
+    "x86-64_windows",
+    "x64WindowsXL",
+    "x86-32_windows",
+    "ppc64_aix",
+    "s390x_linux",
+    "s390xLinuxXL",
+    "ppc64le_linux",
+    "ppc64leLinuxXL",
+    "arm_linux",
+    "aarch64_linux",
+    "aarch64LinuxXL"
+  ],
+  "openjdkVersion": "jdk15u",
+  "enabled": false
+}

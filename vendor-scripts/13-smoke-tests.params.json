@@ -1,0 +1,26 @@
+{
+  "stageId": "13-smoke-tests",
+  "stageDisabled": false,
+  "stageCondition": [],
+  "description": "Temurin smoke test stage parameters. The Temurin implementation runs AQA extended.functional/buildAndPackage tests and does not use a configurable timeout — all timing is driven by TKG make targets.",
+  "parameterGroups": [
+    {
+      "name": "Source Control",
+      "description": "Refs that pin exactly what source is checked out for this stage. Leave empty to use the defaults defined in adoptium_pipeline_config.json.",
+      "parameters": [
+        {
+          "name": "AQA_REF",
+          "type": "string",
+          "default": "",
+          "description": "Git branch or tag for the aqa-tests repository. Empty = default defined in adoptium_pipeline_config.json."
+        },
+        {
+          "name": "BUILD_REF",
+          "type": "string",
+          "default": "",
+          "description": "Git branch or tag for the temurin-build repository (vendor test sources). Empty = default defined in adoptium_pipeline_config.json."
+        }
+      ]
+    }
+  ]
+}
