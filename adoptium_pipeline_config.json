@@ -73,7 +73,6 @@
   "repository": {
     "url": "https://github.com/andrew-m-leonard/adoptium-pipelines.git",
     "branch": "jenkins-creds",
-    "credentialsId": "",
     "buildRepoUrl": "https://github.com/adoptium/temurin-build.git",
     "buildBranch": "master",
     "aqaRepoUrl": "https://github.com/adoptium/aqa-tests.git",
