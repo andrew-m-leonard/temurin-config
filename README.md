@@ -188,7 +188,7 @@ python3 ci/local/run-pipeline.py \
     --config-repo-branch main
 
 # Validate JSON syntax before committing
-jq empty ../ci-temurin-config/configurations/jdk21_pipeline_config.json
+python3 -m json.tool ../ci-temurin-config/configurations/jdk21_pipeline_config.json > /dev/null
 ```
 
 ---
