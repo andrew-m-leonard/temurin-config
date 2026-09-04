@@ -1,6 +1,7 @@
 {
   "stageId": "12-validate-sbom",
   "stageDisabled": false,
+  "stageTimeoutMinutes": 0,
   "stageCondition": [],
   "description": "Temurin SBOM validation stage parameters. This stage clones temurin-build and delegates to tooling/validateSBOM.sh. The temurin-build repo and branch are read from pipeline-config.json (.repoDefaults.buildRepoUrl / .repoDefaults.buildRef).",
   "parameterGroups": [

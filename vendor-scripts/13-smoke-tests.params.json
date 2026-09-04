@@ -1,6 +1,7 @@
 {
   "stageId": "13-smoke-tests",
   "stageDisabled": false,
+  "stageTimeoutMinutes": 0,
   "stageCondition": [],
   "description": "Temurin smoke test stage parameters. The Temurin implementation runs AQA extended.functional/buildAndPackage tests and does not use a configurable timeout — all timing is driven by TKG make targets.",
   "parameterGroups": [
