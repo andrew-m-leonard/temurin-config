@@ -1,6 +1,6 @@
 {
   "jenkinsfilePath": "ci/jenkins/Jenkinsfile.declarative",
-  "pipelineTimeoutHours": 8,
+  "pipelineTimeoutHours": 25,
   "pipelineBaseFolder": "andrew-pipeline-sandbox",
   "jobConfiguration": {
     "defaultParameters": {
@@ -33,9 +33,9 @@
     "10-digital-artifact-sign": "ci.role.worker",
     "11-verify-signing": "ci.role.worker",
     "12-validate-sbom": "ci.role.build&&sw.os.{os}&&hw.arch.{arch}",
-    "13-smoke-tests": "ci.role.build&&sw.os.{os}&&hw.arch.{arch}",
-    "14-aqa-tests": "ci.role.build&&hw.arch.{arch}",
-    "15-tck-tests": "ci.role.build&&hw.arch.{arch}",
+    "13-smoke-tests": "ci.role.test&&sw.os.{os}&&hw.arch.{arch}",
+    "14-aqa-tests": "ci.role.test&&hw.arch.{arch}",
+    "15-tck-tests": "ci.role.test&&hw.arch.{arch}",
     "16-publish": "ci.role.worker",
     "20-reproducible-compare": "ci.role.build&&sw.os.{os}&&hw.arch.{arch}"
   }
