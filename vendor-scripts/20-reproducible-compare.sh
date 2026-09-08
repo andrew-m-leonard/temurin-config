@@ -32,13 +32,23 @@ set -euo pipefail
 #   SCM_REF              - Git tag/ref identifying the version to compare (mandatory, no default)
 #   BUILD_REF            - Git branch/tag for temurin-build (optional, falls back to pipeline-config.json)
 #
+# Optional Environment Variables:
+#   PIPELINE_ROOT        - Root of the ci-adoptium-pipelines checkout. Falls back
+#                          to WORKSPACE when not set (Jenkins sets WORKSPACE to the
+#                          pipeline repo checkout root).
+#
 ################################################################################
 
-# Source shared utilities from ci-adoptium-pipelines (resolved via PIPELINE_ROOT)
+# ---------------------------------------------------------------------------
+# Resolve shared library utilities from ci-adoptium-pipelines.
+# PIPELINE_ROOT: set by CI pipelines where WORKSPACE is not the location of
+#   the ci-adoptium-pipelines repo. Falls back to WORKSPACE if not set.
+# ---------------------------------------------------------------------------
+PIPELINE_LIB="${PIPELINE_ROOT:-${WORKSPACE}}/scripts/lib"
 # shellcheck disable=SC1091
-source "${PIPELINE_ROOT}/scripts/lib/logging-utils.sh"
+source "${PIPELINE_LIB}/logging-utils.sh"
 # shellcheck disable=SC1091
-source "${PIPELINE_ROOT}/scripts/lib/config-utils.sh"
+source "${PIPELINE_LIB}/config-utils.sh"
 
 log_section "Stage 20: Temurin Reproducible Build Comparison"
 
