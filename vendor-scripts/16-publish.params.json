@@ -1,0 +1,25 @@
+{
+  "stageId": "16-publish",
+  "stageDisabled": false,
+  "stageTimeoutMinutes": 60,
+  "stageCondition": [
+    { "param": "PUBLISH_ARTIFACTS", "value": true },
+    { "param": "RELEASE_TYPE",      "value": "regex:^(RELEASE|WEEKLY)$" },
+    { "param": "SCM_REF",           "value": "regex:.+" }
+  ],
+  "description": "Temurin publish stage parameters. Triggers the downstream refactor_openjdk_release_tool job. Gated on PUBLISH_ARTIFACTS being true, RELEASE_TYPE being RELEASE or WEEKLY, and SCM_REF being set.",
+  "parameterGroups": [
+    {
+      "name": "Stage Selections",
+      "description": "Boolean flags that control which pipeline stages are enabled.",
+      "parameters": [
+        {
+          "name": "PUBLISH_ARTIFACTS",
+          "type": "boolean",
+          "default": false,
+          "description": "Publish built artifacts to the release repository."
+        }
+      ]
+    }
+  ]
+}
