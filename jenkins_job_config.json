@@ -1,7 +1,6 @@
 {
   "jenkinsfilePath": "ci/jenkins/Jenkinsfile.declarative",
   "pipelineTimeoutHours": 25,
-  "pipelineBaseFolder": "andrew-pipeline-sandbox",
   "jobConfiguration": {
     "defaultParameters": {
       "VARIANT": "temurin",
