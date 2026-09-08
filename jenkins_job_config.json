@@ -37,6 +37,6 @@
     "14-aqa-tests": "ci.role.test&&hw.arch.{arch}",
     "15-tck-tests": "ci.role.test&&hw.arch.{arch}",
     "16-publish": "ci.role.worker",
-    "20-reproducible-compare": "ci.role.build&&sw.os.{os}&&hw.arch.{arch}"
+    "20-reproducible-compare": "ci.role.test.repro&&sw.os.{os}&&hw.arch.{arch}"
   }
 }
