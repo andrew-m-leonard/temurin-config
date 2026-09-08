@@ -32,7 +32,7 @@
     "09-sbom-sign": "ci.role.worker",
     "10-digital-artifact-sign": "ci.role.worker",
     "11-verify-signing": "ci.role.worker",
-    "12-validate-sbom": "ci.role.build&&sw.os.{os}&&hw.arch.{arch}",
+    "12-validate-sbom": "ci.role.worker",
     "13-smoke-tests": "ci.role.test&&sw.os.{os}&&hw.arch.{arch}",
     "14-aqa-tests": "ci.role.test&&hw.arch.{arch}",
     "15-tck-tests": "ci.role.test&&hw.arch.{arch}",
