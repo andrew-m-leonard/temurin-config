@@ -82,6 +82,27 @@ main() {
 	local build_ref_source="default"
 	[[ -n "${BUILD_REF:-}" ]] && build_ref_source="param"
 
+	# -----------------------------------------------------------------------
+	# Override build repo/ref from build-metadata.json when available.
+	# The 02-build stage records the *actual* ref used after any SBOM-driven
+	# override, which may differ from what was supplied as a stage parameter.
+	# This ensures we test against the exact source that produced the artifact.
+	# -----------------------------------------------------------------------
+	local build_metadata_file="${INPUT_ARTIFACTS_DIR}/build-metadata.json"
+	if [[ -f "${build_metadata_file}" ]]; then
+		local meta_build_ref
+		local meta_build_repo_url
+		meta_build_ref=$(get_config_value "${build_metadata_file}" ".buildRef" "")
+		meta_build_repo_url=$(get_config_value "${build_metadata_file}" ".buildRepoUrl" "")
+		if [[ -n "${meta_build_ref}" ]]; then
+			temurin_build_branch="${meta_build_ref}"
+			build_ref_source="build-metadata"
+		fi
+		if [[ -n "${meta_build_repo_url}" ]]; then
+			temurin_build_repo="${meta_build_repo_url}"
+		fi
+	fi
+
 	log_info "Test Configuration:"
 	log_info "  Java Version     : ${java_version}"
 	log_info "  Target OS        : ${target_os}"
