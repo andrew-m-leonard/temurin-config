@@ -44,7 +44,9 @@
       "name": "release",
       "folder": "release",
       "description": "Production release pipeline — restricted access, manual publish gate",
-      "triggers": ["detect-ga-tag"],
+      "triggers": [
+        { "type": "detect-ga-tag", "cronSchedule": "H * 15-31 * *" }
+      ],
       "defaultParameterOverrides": {
         "RELEASE_TYPE": "RELEASE",
         "PUBLISH_ARTIFACTS": false,
@@ -55,7 +57,10 @@
       "name": "beta",
       "folder": "beta",
       "description": "EA/beta and weekly HEAD development pipeline",
-      "triggers": ["detect-build-tag-for-github-release", "weekly-head"],
+      "triggers": [
+        { "type": "detect-build-tag-for-github-release", "cronSchedule": "H 20 * * *" },
+        { "type": "weekly-head", "cronSchedule": "H 7 * * 6" }
+      ],
       "defaultParameterOverrides": {
         "RELEASE_TYPE": "WEEKLY",
         "PUBLISH_ARTIFACTS": true,
