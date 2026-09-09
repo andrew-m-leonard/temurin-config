@@ -20,6 +20,18 @@
           "description": "Publish built artifacts to the release repository."
         }
       ]
+    },
+    {
+      "name": "Publish Configuration",
+      "description": "Parameters controlling the publish job behaviour.",
+      "parameters": [
+        {
+          "name": "OVERRIDE_PUBLISH_NAME",
+          "type": "string",
+          "default": "",
+          "description": "Override the publish tag name forwarded to the release tool. When set by the trigger pipeline (e.g. 'jdk-21.0.5+11-ea'), this value is used directly instead of being re-derived from SCM_REF. Leave empty for manual builds to use the default derivation."
+        }
+      ]
     }
   ]
 }

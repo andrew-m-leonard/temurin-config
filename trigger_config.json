@@ -1,0 +1,83 @@
+{
+  "triggers": [
+    {
+      "type": "detect-ga-tag",
+      "versions": [
+        {
+          "version": "jdk21",
+          "monitorRepo":     "https://github.com/adoptium/jdk21u.git",
+          "gaTagPattern":    "jdk-21\\..+-ga$",
+          "buildTagPattern": "jdk-21\\..+_adopt$",
+          "enabled": true
+        },
+        {
+          "version": "jdk17",
+          "monitorRepo":     "https://github.com/adoptium/jdk17u.git",
+          "gaTagPattern":    "jdk-17\\..+-ga$",
+          "buildTagPattern": "jdk-17\\..+_adopt$",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "type": "detect-build-tag-for-github-release",
+      "versions": [
+        {
+          "version": "jdk21",
+          "monitorRepo":         "https://github.com/adoptium/jdk21u.git",
+          "targetRepo":          "https://github.com/adoptium/temurin21-binaries",
+          "buildTagPattern":     "jdk-21\\..+_adopt$",
+          "publishNameMap":      "s/_adopt$/-ea/",
+          "targetReleaseTagMap": "s/$/-beta/",
+          "suppressTestingConditions": [
+            {
+              "param": "RELEASE_TYPE",
+              "value": "WEEKLY",
+              "window": { "event": "OPENJDK_RELEASE_DAY", "daysBefore": 0, "daysAfter": 7 }
+            }
+          ],
+          "enabled": true
+        },
+        {
+          "version": "jdk17",
+          "monitorRepo":         "https://github.com/adoptium/jdk17u.git",
+          "targetRepo":          "https://github.com/adoptium/temurin17-binaries",
+          "buildTagPattern":     "jdk-17\\..+_adopt$",
+          "publishNameMap":      "s/_adopt$/-ea/",
+          "targetReleaseTagMap": "s/$/-beta/",
+          "suppressTestingConditions": [
+            {
+              "param": "RELEASE_TYPE",
+              "value": "WEEKLY",
+              "window": { "event": "OPENJDK_RELEASE_DAY", "daysBefore": 0, "daysAfter": 7 }
+            }
+          ],
+          "enabled": true
+        },
+        {
+          "version": "jdk8",
+          "monitorRepo":         "https://github.com/adoptium/jdk8u.git",
+          "targetRepo":          "https://github.com/adoptium/temurin8-binaries",
+          "buildTagPattern":     "jdk8u.+_adopt$",
+          "publishNameMap":      "s/_adopt$/-ea/",
+          "targetReleaseTagMap": "s/$/-beta/",
+          "suppressTestingConditions": [
+            {
+              "param": "RELEASE_TYPE",
+              "value": "WEEKLY",
+              "window": { "event": "OPENJDK_RELEASE_DAY", "daysBefore": 0, "daysAfter": 7 }
+            }
+          ],
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "type": "weekly-head",
+      "versions": [
+        { "version": "jdk25", "enabled": true },
+        { "version": "jdk26", "enabled": true }
+      ]
+    }
+  ]
+}

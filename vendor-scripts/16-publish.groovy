@@ -55,10 +55,20 @@ int call(Map config) {
     // DRY_RUN: always true for RELEASE (safety gate), always false for WEEKLY
     boolean dryRun = (releaseType == 'RELEASE')
 
-    // TAG: strip any "_adopt" suffix; append "-ea" suffix for WEEKLY
-    String tag = scmRef.replace('_adopt', '')
-    if (releaseType == 'WEEKLY') {
-        tag = "${tag}-ea"
+    // TAG: use OVERRIDE_PUBLISH_NAME when set by the trigger pipeline (it already
+    // has the correct form, e.g. "jdk-21.0.5+11-ea").  Fall back to deriving from
+    // SCM_REF for manual builds where OVERRIDE_PUBLISH_NAME is not supplied.
+    String overridePublishName = env.OVERRIDE_PUBLISH_NAME?.trim() ?: ''
+    String tag
+    if (overridePublishName) {
+        tag = overridePublishName
+        echo "  Using OVERRIDE_PUBLISH_NAME: ${tag}"
+    } else {
+        tag = scmRef.replace('_adopt', '')
+        if (releaseType == 'WEEKLY') {
+            tag = "${tag}-ea"
+        }
+        echo "  Derived TAG from SCM_REF: ${tag}"
     }
 
     // TIMESTAMP: current UTC date in the format expected by the publish job

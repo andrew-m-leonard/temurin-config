@@ -1,4 +1,5 @@
 {
+  "pipelineBaseFolder": "temurin",
   "jenkinsfilePath": "ci/jenkins/Jenkinsfile.declarative",
   "pipelineTimeoutHours": 25,
   "jobConfiguration": {
@@ -37,5 +38,29 @@
     "15-tck-tests": "ci.role.test&&hw.arch.{arch}",
     "16-publish": "ci.role.worker",
     "20-reproducible-compare": "ci.role.test.repro&&sw.os.{os}&&hw.arch.{arch}"
-  }
+  },
+  "deployments": [
+    {
+      "name": "release",
+      "folder": "release",
+      "description": "Production release pipeline — restricted access, manual publish gate",
+      "triggers": ["detect-ga-tag"],
+      "defaultParameterOverrides": {
+        "RELEASE_TYPE": "RELEASE",
+        "PUBLISH_ARTIFACTS": false,
+        "SIGN_ARTIFACTS": true
+      }
+    },
+    {
+      "name": "beta",
+      "folder": "beta",
+      "description": "EA/beta and weekly HEAD development pipeline",
+      "triggers": ["detect-build-tag-for-github-release", "weekly-head"],
+      "defaultParameterOverrides": {
+        "RELEASE_TYPE": "WEEKLY",
+        "PUBLISH_ARTIFACTS": true,
+        "SIGN_ARTIFACTS": true
+      }
+    }
+  ]
 }
