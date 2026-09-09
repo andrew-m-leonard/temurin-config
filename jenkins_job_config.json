@@ -63,7 +63,7 @@
       ],
       "defaultParameterOverrides": {
         "RELEASE_TYPE": "WEEKLY",
-        "PUBLISH_ARTIFACTS": true,
+        "PUBLISH_ARTIFACTS": false,
         "SIGN_ARTIFACTS": true
       }
     }
