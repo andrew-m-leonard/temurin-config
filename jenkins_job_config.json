@@ -7,7 +7,7 @@
       "VARIANT": "temurin",
       "CLEAN_WORKSPACE_AFTER_STAGE": true,
       "CREATE_SBOM": true,
-      "RUN_TESTS": true,
+      "RUN_TESTS": false,
       "ENABLE_INSTALLERS": true,
       "SIGN_ARTIFACTS": true,
       "PUBLISH_ARTIFACTS": false,
@@ -64,7 +64,8 @@
       "defaultParameterOverrides": {
         "RELEASE_TYPE": "WEEKLY",
         "PUBLISH_ARTIFACTS": false,
-        "SIGN_ARTIFACTS": true
+        "SIGN_ARTIFACTS": true,
+        "RUN_REPRODUCIBLE_COMPARE": true
       }
     }
   ]

@@ -9,6 +9,13 @@
           "gaTagPattern":    "jdk-21\\..+-ga$",
           "buildTagPattern": "jdk-21\\..+_adopt$",
           "enabled": true
+        },
+        {
+          "version": "jdk27",
+          "monitorRepo":     "https://github.com/adoptium/jdk.git",
+          "gaTagPattern":    "jdk-27\\..+-ga$",
+          "buildTagPattern": "jdk-27\\..+_adopt$",
+          "enabled": true
         }
       ]
     },
