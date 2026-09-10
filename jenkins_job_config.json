@@ -44,6 +44,25 @@
       "name": "release",
       "folder": "release",
       "description": "Production release pipeline — restricted access, manual publish gate",
+      "authorization": {
+        "inheritParent": false,
+        "permissions": [
+          { "permission": "Job/Build", "grantee": "AdoptOpenJDK*build" },
+          { "permission": "Job/Cancel", "grantee": "AdoptOpenJDK*build" },
+          { "permission": "Job/Configure", "grantee": "AdoptOpenJDK*build" },
+          { "permission": "Job/Read", "grantee": "AdoptOpenJDK*build" },
+          { "permission": "Job/Workspace", "grantee": "AdoptOpenJDK*build" },
+          { "permission": "Run/Update", "grantee": "AdoptOpenJDK*build" },
+          { "permission": "Job/Build", "grantee": "AdoptOpenJDK*build-triage" },
+          { "permission": "Job/Cancel", "grantee": "AdoptOpenJDK*build-triage" },
+          { "permission": "Job/Configure", "grantee": "AdoptOpenJDK*build-triage" },
+          { "permission": "Job/Read", "grantee": "AdoptOpenJDK*build-triage" },
+          { "permission": "Job/Workspace", "grantee": "AdoptOpenJDK*build-triage" },
+          { "permission": "Run/Update", "grantee": "AdoptOpenJDK*build-triage" },
+          { "permission": "Job/Read", "grantee": "eclipse-temurin-bot" },
+          { "permission": "Job/Read", "grantee": "eclipse-temurin-compliance-bot" }
+        ]
+      },
       "triggers": [
         { "type": "detect-ga-tag", "cronSchedule": "H * 15-31 * *" }
       ],
