@@ -37,7 +37,23 @@
             }
           ],
           "enabled": true
-        }
+        },
+        {
+          "version": "jdk25",
+          "monitorRepo":         "https://github.com/adoptium/jdk25u.git",
+          "targetRepo":          "https://github.com/adoptium/temurin25-binaries",
+          "buildTagPattern":     "jdk-25\\..+_adopt$",
+          "publishNameMap":      "s/_adopt$/-ea/",
+          "targetReleaseTagMap": "s/$/-beta/",
+          "suppressTestingConditions": [
+            {
+              "param": "RELEASE_TYPE",
+              "value": "WEEKLY",
+              "window": { "event": "OPENJDK_RELEASE_DAY", "daysBefore": 0, "daysAfter": 7 }
+            }
+          ],
+          "enabled": true
+        },
       ]
     },
     {
