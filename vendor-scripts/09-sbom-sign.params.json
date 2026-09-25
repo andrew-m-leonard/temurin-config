@@ -1,0 +1,30 @@
+{
+  "stageId": "09-sbom-sign",
+  "stageDisabled": false,
+  "stageTimeoutMinutes": 60,
+  "stageCondition": [
+    { "param": "SIGN_ARTIFACTS", "value": true },
+    { "param": "CREATE_SBOM",    "value": true }
+  ],
+  "description": "Temurin SBOM JSF signing stage. Builds SBOM signing libraries, triggers sign_temurin_jsf, copies signed SBOM JSON files back into TARGET_DIR, and archives them. Gated on both SIGN_ARTIFACTS and CREATE_SBOM being true.",
+  "parameterGroups": [
+    {
+      "name": "Stage Selections",
+      "description": "Boolean flags that control which pipeline stages are enabled.",
+      "parameters": [
+        {
+          "name": "SIGN_ARTIFACTS",
+          "type": "boolean",
+          "default": false,
+          "description": "Enable artifact signing."
+        },
+        {
+          "name": "CREATE_SBOM",
+          "type": "boolean",
+          "default": false,
+          "description": "Enable SBOM generation. Required for SBOM signing to run."
+        }
+      ]
+    }
+  ]
+}

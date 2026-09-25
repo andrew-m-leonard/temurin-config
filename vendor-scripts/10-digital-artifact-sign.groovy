@@ -80,9 +80,7 @@ int call(Map config) {
     )
 
     // ── Archive GPG signatures ─────────────────────────────────────────────────
-    timeout(time: 6, unit: 'HOURS') {
-        archiveArtifacts artifacts: "${env.TARGET_DIR}/*.sig"
-    }
+    archiveArtifacts artifacts: "${env.TARGET_DIR}/*.sig"
 
     echo "✅ Digital artifact signing complete"
     return 0
