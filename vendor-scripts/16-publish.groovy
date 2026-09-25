@@ -35,9 +35,14 @@
 int call(Map config) {
 
     // ── Gate check ────────────────────────────────────────────────────────────
-    String releaseType = env.RELEASE_TYPE ?: ''
-    String scmRef      = env.SCM_REF      ?: ''
+    String publishArtifacts = env.PUBLISH_ARTIFACTS ?: ''
+    String releaseType      = env.RELEASE_TYPE      ?: ''
+    String scmRef           = env.SCM_REF            ?: ''
 
+    if (publishArtifacts.toLowerCase() != 'true') {
+        echo "ℹ️  16-publish: PUBLISH_ARTIFACTS='${publishArtifacts}' is not true — skipping"
+        return 0
+    }
     if (!(releaseType in ['RELEASE', 'WEEKLY'])) {
         echo "ℹ️  16-publish: RELEASE_TYPE='${releaseType}' is not RELEASE or WEEKLY — skipping"
         return 0

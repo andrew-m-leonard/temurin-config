@@ -1,0 +1,23 @@
+{
+  "stageId": "10-digital-artifact-sign",
+  "stageDisabled": false,
+  "stageTimeoutMinutes": 60,
+  "stageCondition": [
+    { "param": "SIGN_ARTIFACTS", "value": true }
+  ],
+  "description": "Temurin GPG signing stage. Triggers sign_temurin_gpg downstream job, copies .sig files back into TARGET_DIR, and archives them. Gated on SIGN_ARTIFACTS being true.",
+  "parameterGroups": [
+    {
+      "name": "Stage Selections",
+      "description": "Boolean flags that control which pipeline stages are enabled.",
+      "parameters": [
+        {
+          "name": "SIGN_ARTIFACTS",
+          "type": "boolean",
+          "default": false,
+          "description": "Enable artifact signing. When true, triggers sign_temurin_gpg and archives the resulting .sig files."
+        }
+      ]
+    }
+  ]
+}
