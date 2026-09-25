@@ -1,0 +1,25 @@
+{
+  "stageId": "15-tck-tests",
+  "stageDisabled": false,
+  "stageTimeoutMinutes": 30,
+  "stageCondition": [
+    { "param": "RUN_TESTS",    "value": true },
+    { "param": "ENABLE_TCK",   "value": true },
+    { "param": "RELEASE_TYPE", "value": "regex:^(RELEASE|WEEKLY)$" }
+  ],
+  "description": "Temurin TCK test stage. Triggers AQA_Test_Pipeline_JCK asynchronously with the archived JDK URL. Gated on ENABLE_TCK being true and RELEASE_TYPE being RELEASE or WEEKLY.",
+  "parameterGroups": [
+    {
+      "name": "Stage Selections",
+      "description": "Boolean flags that control which pipeline stages are enabled.",
+      "parameters": [
+        {
+          "name": "ENABLE_TCK",
+          "type": "boolean",
+          "default": false,
+          "description": "Run TCK tests. Only applies to Temurin variant builds on RELEASE or WEEKLY release types. Disabled by default — enable for official certification runs."
+        }
+      ]
+    }
+  ]
+}
