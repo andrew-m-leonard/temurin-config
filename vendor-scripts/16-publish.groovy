@@ -102,7 +102,7 @@ int call(Map config) {
 
     // ── Trigger downstream publish job ────────────────────────────────────────
     def result = build(
-        job: 'build-scripts/job/release/job/refactor_openjdk_release_tool',
+        job: 'build-scripts/job/release/job/aaaaaarefactor_openjdk_release_tool',
         parameters: [
             booleanParam(name: 'RELEASE',              value: release),
             booleanParam(name: 'DRY_RUN',              value: dryRun),
