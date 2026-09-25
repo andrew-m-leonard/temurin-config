@@ -17,12 +17,6 @@
           "type": "boolean",
           "default": false,
           "description": "Enable artifact signing."
-        },
-        {
-          "name": "CREATE_SBOM",
-          "type": "boolean",
-          "default": false,
-          "description": "Enable SBOM generation. Required for SBOM signing to run."
         }
       ]
     }
