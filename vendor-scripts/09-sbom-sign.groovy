@@ -78,7 +78,7 @@ int call(Map config) {
         parameters: [
             string(name: 'UPSTREAM_JOB_NUMBER',    value: env.BUILD_NUMBER                              ?: ''),
             string(name: 'UPSTREAM_JOB_NAME',      value: env.JOB_NAME                                 ?: ''),
-            string(name: 'UPSTREAM_DIR',            value: '.'),
+            string(name: 'UPSTREAM_DIR',            value: 'build_output'),
             string(name: 'SBOM_LIBRARY_JOB_NUMBER', value: "${buildSBOMLibrariesJob.getNumber()}"),
         ],
         wait:      true,

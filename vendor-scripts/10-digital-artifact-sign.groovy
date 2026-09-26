@@ -59,7 +59,7 @@ int call(Map config) {
         parameters: [
             string(name: 'UPSTREAM_JOB_NUMBER', value: env.BUILD_NUMBER ?: ''),
             string(name: 'UPSTREAM_JOB_NAME',   value: env.JOB_NAME     ?: ''),
-            string(name: 'UPSTREAM_DIR',         value: 'workspace/target'),
+            string(name: 'UPSTREAM_DIR',         value: 'build_output'),
         ],
         wait:      true,
         propagate: true
