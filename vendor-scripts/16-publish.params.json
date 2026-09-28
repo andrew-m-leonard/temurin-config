@@ -7,6 +7,19 @@
     { "param": "RELEASE_TYPE",      "value": "regex:^(RELEASE|WEEKLY)$" },
     { "param": "SCM_REF",           "value": "regex:.+" }
   ],
+  "buildInputArtifacts": [
+    "**/*.tar.gz",
+    "**/*.zip",
+    "**/*.msi",
+    "**/*.pkg",
+    "**/*.sig",
+    "**/*.asc",
+    "**/*sbom*.json",
+    "metadata/**/*"
+  ],
+  "buildOutputArtifacts": [
+    "publish/**/*"
+  ],
   "description": "Temurin publish stage parameters. Triggers the downstream refactor_openjdk_release_tool job. Gated on PUBLISH_ARTIFACTS being true, RELEASE_TYPE being RELEASE or WEEKLY, and SCM_REF being set.",
   "parameterGroups": [
     {

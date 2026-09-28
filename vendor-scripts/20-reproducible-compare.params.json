@@ -6,6 +6,15 @@
     { "param": "RUN_REPRODUCIBLE_COMPARE", "value": true },
     { "param": "SCM_REF", "value": "regex:.+" }
   ],
+  "buildInputArtifacts": [
+    "*.tar.gz",
+    "*.zip"
+  ],
+  "buildOutputArtifacts": [
+    "comparison-report.txt",
+    "reprotest.diff",
+    "ReproduciblePercent"
+  ],
   "description": "Temurin reproducible build comparison stage. SCM_REF must be specified — it identifies the exact published Adoptium binary to compare against. BUILD_REF pins the temurin-build branch used for the comparison tooling.",
   "parameterGroups": [
     {

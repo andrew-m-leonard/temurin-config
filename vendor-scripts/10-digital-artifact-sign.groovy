@@ -27,6 +27,7 @@
  *   WORKSPACE            - Stage workspace directory
  *   CONFIG_FILE          - Path to pipeline-config.json
  *   INPUT_ARTIFACTS_DIR  - Directory containing artifacts to sign
+ *   BUILD_ARTIFACTS_PATH - Relative subfolder path for build outputs (e.g. 'build_output')
  *   TARGET_DIR           - Directory for .sig output files
  *
  * Called by StageScriptRunner._dispatch():
@@ -54,12 +55,13 @@ int call(Map config) {
     echo "  TARGET_DIR         : ${env.TARGET_DIR}"
 
     // ── Trigger sign_temurin_gpg downstream job ───────────────────────────────
+    String buildArtifactsPath = env.BUILD_ARTIFACTS_PATH
     def signJob = build(
         job: 'build-scripts/release/sign_temurin_gpg',
         parameters: [
             string(name: 'UPSTREAM_JOB_NUMBER', value: env.BUILD_NUMBER ?: ''),
             string(name: 'UPSTREAM_JOB_NAME',   value: env.JOB_NAME     ?: ''),
-            string(name: 'UPSTREAM_DIR',         value: 'build_output'),
+            string(name: 'UPSTREAM_DIR',         value: buildArtifactsPath),
         ],
         wait:      true,
         propagate: true
@@ -68,19 +70,17 @@ int call(Map config) {
     echo "sign_temurin_gpg job completed: build #${signJob.getNumber()}"
 
     // ── Copy .sig artifacts back from the sign job ────────────────────────────
-    sh "mkdir -p '${env.TARGET_DIR}'"
+    String targetBuildOutput = "${env.TARGET_DIR}/${buildArtifactsPath}"
+    sh "mkdir -p '${targetBuildOutput}'"
 
     copyArtifacts(
         projectName:          'build-scripts/release/sign_temurin_gpg',
         selector:             specific("${signJob.getNumber()}"),
         filter:               '**/*.sig',
         fingerprintArtifacts: true,
-        target:               env.TARGET_DIR,
+        target:               targetBuildOutput,
         flatten:              true
     )
-
-    // ── Archive GPG signatures ─────────────────────────────────────────────────
-    archiveArtifacts artifacts: "${env.TARGET_DIR}/*.sig"
 
     echo "✅ Digital artifact signing complete"
     return 0
