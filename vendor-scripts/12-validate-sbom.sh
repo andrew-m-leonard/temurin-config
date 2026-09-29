@@ -110,6 +110,7 @@ echo "${SBOM_FILES}"
 
 # Validate each SBOM file
 VALIDATION_FAILED=0
+VALIDATION_RESULTS=()
 while IFS= read -r sbom_file; do
 	if [ -n "${sbom_file}" ]; then
 		echo ""
@@ -120,12 +121,30 @@ while IFS= read -r sbom_file; do
 			"${SCM_REF}" \
 			"${sbom_file}"; then
 			echo "SUCCESS: SBOM validation passed for ${sbom_file}"
+			VALIDATION_RESULTS+=("PASSED: ${sbom_file}")
 		else
 			echo "ERROR: SBOM validation failed for ${sbom_file}"
+			VALIDATION_RESULTS+=("FAILED: ${sbom_file}")
 			VALIDATION_FAILED=1
 		fi
 	fi
 done <<<"${SBOM_FILES}"
+
+# Write summary report to TARGET_DIR (required by pipeline framework)
+{
+	echo "=== Temurin SBOM Validation Report ==="
+	echo "Timestamp: $(date -u '+%Y-%m-%dT%H:%M:%SZ')"
+	echo ""
+	for result in "${VALIDATION_RESULTS[@]}"; do
+		echo "${result}"
+	done
+	echo ""
+	if [ ${VALIDATION_FAILED} -eq 1 ]; then
+		echo "Overall result: FAILED"
+	else
+		echo "Overall result: PASSED"
+	fi
+} >"${TARGET_DIR}/sbom-validation.txt"
 
 if [ ${VALIDATION_FAILED} -eq 1 ]; then
 	echo ""
