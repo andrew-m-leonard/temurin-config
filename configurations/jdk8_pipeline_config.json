@@ -166,19 +166,7 @@
     }
   },
   "targetConfigurations": [
-    "x86-64_mac",
-    "x86-64_linux",
-    "x86-64_alpine-linux",
-    "aarch64_alpine-linux",
-    "x86-64_windows",
-    "x86-32_windows",
-    "ppc64_aix",
-    "s390x_linux",
-    "sparcv9_solaris",
-    "x86-64_solaris",
-    "ppc64le_linux",
-    "arm_linux",
-    "aarch64_linux"
+    "x86-64_linux"
   ],
   "openjdkVersion": "jdk8u",
   "enabled": true
