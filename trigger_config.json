@@ -4,6 +4,27 @@
       "type": "detect-ga-tag",
       "versions": [
         {
+          "version": "jdk8",
+          "monitorRepo":     "https://github.com/adoptium/jdk8u.git",
+          "gaTagPattern":    "jdk8u\\d+-ga$",
+          "buildTagPattern": "jdk8u\\d+-b\\d+_adopt$",
+          "enabled": true
+        },
+        {
+          "version": "jdk11",
+          "monitorRepo":     "https://github.com/adoptium/jdk11u.git",
+          "gaTagPattern":    "jdk-11(\\..+)?-ga$",
+          "buildTagPattern": "jdk-11(\\..+)?\\+.+_adopt$",
+          "enabled": true
+        },
+        {
+          "version": "jdk17",
+          "monitorRepo":     "https://github.com/adoptium/jdk17u.git",
+          "gaTagPattern":    "jdk-17(\\..+)?-ga$",
+          "buildTagPattern": "jdk-17(\\..+)?\\+.+_adopt$",
+          "enabled": true
+        },
+        {
           "version": "jdk21",
           "monitorRepo":     "https://github.com/adoptium/jdk21u.git",
           "gaTagPattern":    "jdk-21(\\..+)?-ga$",
@@ -12,9 +33,16 @@
         },
         {
           "version": "jdk27",
-          "monitorRepo":     "https://github.com/adoptium/jdk.git",
+          "monitorRepo":     "https://github.com/adoptium/jdk27u.git",
           "gaTagPattern":    "jdk-27(\\..+)?-ga$",
           "buildTagPattern": "jdk-27(\\..+)?\\+.+_adopt$",
+          "enabled": true
+        },
+        {
+          "version": "jdk28",
+          "monitorRepo":     "https://github.com/adoptium/jdk.git",
+          "gaTagPattern":    "jdk-28(\\..+)?-ga$",
+          "buildTagPattern": "jdk-28(\\..+)?\\+.+_adopt$",
           "enabled": true
         }
       ]
@@ -22,6 +50,54 @@
     {
       "type": "detect-build-tag-for-github-release",
       "versions": [
+        {
+          "version": "jdk8",
+          "monitorRepo":         "https://github.com/adoptium/jdk8u.git",
+          "targetRepo":          "https://github.com/adoptium/temurin8-binaries",
+          "buildTagPattern":     "jdk8u\\d+-b\\d+_adopt$",
+          "publishNameMap":      "s/_adopt$/-ea/",
+          "targetReleaseTagMap": "s/$/-beta/",
+          "suppressTestingConditions": [
+            {
+              "param": "RELEASE_TYPE",
+              "value": "WEEKLY",
+              "window": { "event": "OPENJDK_RELEASE_DAY", "daysBefore": 0, "daysAfter": 7 }
+            }
+          ],
+          "enabled": true
+        },
+        {
+          "version": "jdk11",
+          "monitorRepo":         "https://github.com/adoptium/jdk11u.git",
+          "targetRepo":          "https://github.com/adoptium/temurin11-binaries",
+          "buildTagPattern":     "jdk-11(\\..+)?\\+.+_adopt$",
+          "publishNameMap":      "s/_adopt$/-ea/",
+          "targetReleaseTagMap": "s/$/-beta/",
+          "suppressTestingConditions": [
+            {
+              "param": "RELEASE_TYPE",
+              "value": "WEEKLY",
+              "window": { "event": "OPENJDK_RELEASE_DAY", "daysBefore": 0, "daysAfter": 7 }
+            }
+          ],
+          "enabled": true
+        },
+        {
+          "version": "jdk17",
+          "monitorRepo":         "https://github.com/adoptium/jdk17u.git",
+          "targetRepo":          "https://github.com/adoptium/temurin17-binaries",
+          "buildTagPattern":     "jdk-17(\\..+)?\\+.+_adopt$",
+          "publishNameMap":      "s/_adopt$/-ea/",
+          "targetReleaseTagMap": "s/$/-beta/",
+          "suppressTestingConditions": [
+            {
+              "param": "RELEASE_TYPE",
+              "value": "WEEKLY",
+              "window": { "event": "OPENJDK_RELEASE_DAY", "daysBefore": 0, "daysAfter": 7 }
+            }
+          ],
+          "enabled": true
+        },
         {
           "version": "jdk21",
           "monitorRepo":         "https://github.com/adoptium/jdk21u.git",
@@ -43,6 +119,22 @@
           "monitorRepo":         "https://github.com/adoptium/jdk25u.git",
           "targetRepo":          "https://github.com/adoptium/temurin25-binaries",
           "buildTagPattern":     "jdk-25(\\..+)?\\+.+_adopt$",
+          "publishNameMap":      "s/_adopt$/-ea/",
+          "targetReleaseTagMap": "s/$/-beta/",
+          "suppressTestingConditions": [
+            {
+              "param": "RELEASE_TYPE",
+              "value": "WEEKLY",
+              "window": { "event": "OPENJDK_RELEASE_DAY", "daysBefore": 0, "daysAfter": 7 }
+            }
+          ],
+          "enabled": true
+        },
+        {
+          "version": "jdk28",
+          "monitorRepo":         "https://github.com/adoptium/jdk.git",
+          "targetRepo":          "https://github.com/adoptium/temurin28-binaries",
+          "buildTagPattern":     "jdk-28(\\..+)?\\+.+_adopt$",
           "publishNameMap":      "s/_adopt$/-ea/",
           "targetReleaseTagMap": "s/$/-beta/",
           "suppressTestingConditions": [
