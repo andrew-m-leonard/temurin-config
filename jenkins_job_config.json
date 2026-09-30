@@ -2,24 +2,6 @@
   "pipelineBaseFolder": "andrew-pipeline-sandbox",
   "jenkinsfilePath": "ci/jenkins/Jenkinsfile.declarative",
   "pipelineTimeoutHours": 25,
-  "jobConfiguration": {
-    "defaultParameters": {
-      "VARIANT": "temurin",
-      "CLEAN_WORKSPACE_AFTER_STAGE": true,
-      "CREATE_SBOM": true,
-      "RUN_TESTS": false,
-      "ENABLE_INSTALLERS": true,
-      "SIGN_ARTIFACTS": true,
-      "PUBLISH_ARTIFACTS": false,
-      "RUN_REPRODUCIBLE_COMPARE": false
-    },
-    "logRotation": {
-      "daysToKeep": 30,
-      "numToKeep": 50,
-      "artifactDaysToKeep": 7,
-      "artifactNumToKeep": 10
-    }
-  },
   "stageAgentLabels": {
     "__any__": "ci.role.worker",
     "01-initialize": "ci.role.worker",
@@ -44,6 +26,25 @@
       "name": "release",
       "folder": "release",
       "description": "Production release pipeline — restricted access, manual publish gate",
+      "jobConfiguration": {
+        "defaultParameters": {
+          "VARIANT": "temurin",
+          "CLEAN_WORKSPACE_AFTER_STAGE": true,
+          "CREATE_SBOM": true,
+          "RUN_TESTS": true,
+          "ENABLE_INSTALLERS": true,
+          "SIGN_ARTIFACTS": true,
+          "PUBLISH_ARTIFACTS": true,
+          "RUN_REPRODUCIBLE_COMPARE": false,
+          "RELEASE_TYPE": "RELEASE"
+        },
+        "logRotation": {
+          "daysToKeep": 250,
+          "numToKeep": 60,
+          "artifactDaysToKeep": 250,
+          "artifactNumToKeep": 60
+        }
+      },
       "authorization": {
         "inheritParent": false,
         "permissions": [
@@ -65,27 +66,35 @@
       },
       "triggers": [
         { "type": "detect-ga-tag", "cronSchedule": "H * 15-31 * *" }
-      ],
-      "defaultParameterOverrides": {
-        "RELEASE_TYPE": "RELEASE",
-        "PUBLISH_ARTIFACTS": false,
-        "SIGN_ARTIFACTS": true
-      }
+      ]
     },
     {
       "name": "beta",
       "folder": "beta",
       "description": "EA/beta and weekly HEAD development pipeline",
+      "jobConfiguration": {
+        "defaultParameters": {
+          "VARIANT": "temurin",
+          "CLEAN_WORKSPACE_AFTER_STAGE": true,
+          "CREATE_SBOM": true,
+          "RUN_TESTS": true,
+          "ENABLE_INSTALLERS": true,
+          "SIGN_ARTIFACTS": true,
+          "PUBLISH_ARTIFACTS": true,
+          "RUN_REPRODUCIBLE_COMPARE": true,
+          "RELEASE_TYPE": "WEEKLY"
+        },
+        "logRotation": {
+          "daysToKeep": 250,
+          "numToKeep": 60,
+          "artifactDaysToKeep": 250,
+          "artifactNumToKeep": 2
+        }
+      },
       "triggers": [
         { "type": "detect-build-tag-for-github-release", "cronSchedule": "H 20 * * *" },
         { "type": "weekly-head", "cronSchedule": "H 7 * * 6" }
-      ],
-      "defaultParameterOverrides": {
-        "RELEASE_TYPE": "WEEKLY",
-        "PUBLISH_ARTIFACTS": false,
-        "SIGN_ARTIFACTS": true,
-        "RUN_REPRODUCIBLE_COMPARE": true
-      }
+      ]
     }
   ]
 }
