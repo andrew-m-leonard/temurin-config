@@ -69,6 +69,11 @@ int call(Map config) {
     String javaToBuild  = (env.CONFIG_JAVA_TO_BUILD ?: '').trim().toUpperCase()
     String buildUrl     = env.BUILD_URL           ?: ''
     String inputDir     = env.INPUT_ARTIFACTS_DIR ?: env.WORKSPACE
+    String buildOutputDir = env.BUILD_OUTPUT_DIR
+    if (!buildOutputDir) {
+        error('BUILD_OUTPUT_DIR is not set — ensure stage-constants.properties is present and loaded')
+    }
+    String artifactsDir = "${inputDir}/${buildOutputDir}"
 
     // ── Derive JDK version number (e.g. "JDK21" → "21") ──────────────────────
     String jdkVersion = javaToBuild.replaceAll(/[^0-9]/, '')
@@ -80,20 +85,20 @@ int call(Map config) {
     // ── Determine build_type from RELEASE_TYPE ────────────────────────────────
     String buildType = (releaseType == 'RELEASE') ? 'release' : 'weekly'
 
-    // ── Find the JDK archive in INPUT_ARTIFACTS_DIR ───────────────────────────
+    // ── Find the JDK archive in INPUT_ARTIFACTS_DIR/BUILD_OUTPUT_DIR ─────────
     String extension = (targetOs == 'windows') ? 'zip' : 'tar.gz'
     String jdkFileName = sh(
-        script: "find '${inputDir}' -maxdepth 1 -name 'OpenJDK*-jdk_*.${extension}' -printf '%f\\n' 2>/dev/null | head -1 || true",
+        script: "find '${artifactsDir}' -maxdepth 1 -name 'OpenJDK*-jdk_*.${extension}' -printf '%f\\n' 2>/dev/null | head -1 || true",
         returnStdout: true
     ).trim()
 
     if (!jdkFileName) {
-        echo "❌ 15-tck-tests: no JDK archive (OpenJDK*-jdk_*.${extension}) found in ${inputDir}"
+        echo "❌ 15-tck-tests: no JDK archive (OpenJDK*-jdk_*.${extension}) found in ${artifactsDir}"
         currentBuild.result = 'FAILURE'
         return 1
     }
 
-    String sdkUrl = "${buildUrl}artifact/workspace/target/${jdkFileName}"
+    String sdkUrl = "${buildUrl}artifact/${buildOutputDir}/${jdkFileName}"
 
     // ── Log resolved parameters ───────────────────────────────────────────────
     echo "=== TCK Test Stage ==="

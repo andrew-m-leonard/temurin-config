@@ -95,12 +95,14 @@ if [ -z "${SCM_REF:-}" ]; then
 	echo "Extracted SCM_REF from config: ${SCM_REF}"
 fi
 
-# Find all SBOM JSON files (excluding metadata files and params files)
-echo "Searching for SBOM files in ${INPUT_ARTIFACTS_DIR}..."
-SBOM_FILES=$(find "${INPUT_ARTIFACTS_DIR}" -name '*sbom*.json' -type f ! -name '*.params.json' | grep -v metadata || true)
+# Find all SBOM JSON files under INPUT_ARTIFACTS_DIR/BUILD_OUTPUT_DIR
+# BUILD_OUTPUT_DIR is injected by the pipeline from stage-constants.properties.
+SBOM_ARTIFACTS_DIR="${INPUT_ARTIFACTS_DIR}/${BUILD_OUTPUT_DIR}"
+echo "Searching for SBOM files in ${SBOM_ARTIFACTS_DIR}..."
+SBOM_FILES=$(find "${SBOM_ARTIFACTS_DIR}" -name '*sbom*.json' -type f ! -name '*.params.json' | grep -v metadata || true)
 
 if [ -z "${SBOM_FILES}" ]; then
-	echo "WARNING: No SBOM files found in ${INPUT_ARTIFACTS_DIR}"
+	echo "WARNING: No SBOM files found in ${SBOM_ARTIFACTS_DIR}"
 	echo "This may indicate that SBOM generation was not successful"
 	exit 1
 fi

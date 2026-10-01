@@ -155,10 +155,15 @@ String resolveArtifactsToCopy(String targetOs) {
     }
 
     String inputDir = env.INPUT_ARTIFACTS_DIR ?: env.WORKSPACE
+    String buildOutputDir = env.BUILD_OUTPUT_DIR
+    if (!buildOutputDir) {
+        error('BUILD_OUTPUT_DIR is not set — ensure stage-constants.properties is present and loaded')
+    }
+    String artifactsDir = "${inputDir}/${buildOutputDir}"
     List artifacts = []
     extensions.each { String ext ->
         def found = sh(
-            script: "find '${inputDir}' -maxdepth 1 -name 'OpenJDK*${ext}' -printf '%f\\n' 2>/dev/null || true",
+            script: "find '${artifactsDir}' -maxdepth 1 -name 'OpenJDK*${ext}' -printf '%f\\n' 2>/dev/null || true",
             returnStdout: true
         ).trim()
         if (found) {

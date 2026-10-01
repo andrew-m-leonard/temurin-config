@@ -27,7 +27,7 @@
  *   WORKSPACE            - Stage workspace directory
  *   CONFIG_FILE          - Path to pipeline-config.json
  *   INPUT_ARTIFACTS_DIR  - Directory containing artifacts to sign
- *   BUILD_ARTIFACTS_PATH - Relative subfolder path for build outputs (e.g. 'build_output')
+ *   BUILD_OUTPUT_DIR     - Relative subfolder under INPUT_ARTIFACTS_DIR containing build outputs
  *   TARGET_DIR           - Directory for .sig output files
  *
  * Called by StageScriptRunner._dispatch():
@@ -55,13 +55,16 @@ int call(Map config) {
     echo "  TARGET_DIR         : ${env.TARGET_DIR}"
 
     // ── Trigger sign_temurin_gpg downstream job ───────────────────────────────
-    String buildArtifactsPath = env.BUILD_ARTIFACTS_PATH
+    String buildOutputDir = env.BUILD_OUTPUT_DIR
+    if (!buildOutputDir) {
+        error('BUILD_OUTPUT_DIR is not set — ensure stage-constants.properties is present and loaded')
+    }
     def signJob = build(
         job: 'build-scripts/release/sign_temurin_gpg',
         parameters: [
             string(name: 'UPSTREAM_JOB_NUMBER', value: env.BUILD_NUMBER ?: ''),
             string(name: 'UPSTREAM_JOB_NAME',   value: env.JOB_NAME     ?: ''),
-            string(name: 'UPSTREAM_DIR',         value: buildArtifactsPath),
+            string(name: 'UPSTREAM_DIR',         value: buildOutputDir),
         ],
         wait:      true,
         propagate: true
@@ -70,7 +73,7 @@ int call(Map config) {
     echo "sign_temurin_gpg job completed: build #${signJob.getNumber()}"
 
     // ── Copy .sig artifacts back from the sign job ────────────────────────────
-    String targetBuildOutput = "${env.TARGET_DIR}/${buildArtifactsPath}"
+    String targetBuildOutput = "${env.TARGET_DIR}/${buildOutputDir}"
     sh "mkdir -p '${targetBuildOutput}'"
 
     copyArtifacts(

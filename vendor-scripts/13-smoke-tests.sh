@@ -88,7 +88,7 @@ main() {
 	# override, which may differ from what was supplied as a stage parameter.
 	# This ensures we test against the exact source that produced the artifact.
 	# -----------------------------------------------------------------------
-	local build_metadata_file="${INPUT_ARTIFACTS_DIR}/build-metadata.json"
+	local build_metadata_file="${INPUT_ARTIFACTS_DIR}/${BUILD_OUTPUT_DIR}/build-metadata.json"
 	if [[ -f "${build_metadata_file}" ]]; then
 		local meta_build_ref
 		local meta_build_repo_url
@@ -179,13 +179,15 @@ main() {
 }
 
 # ---------------------------------------------------------------------------
-# Find the main JDK image tarball/zip in INPUT_ARTIFACTS_DIR
+# Find the main JDK image tarball/zip in INPUT_ARTIFACTS_DIR/BUILD_OUTPUT_DIR
 # ---------------------------------------------------------------------------
 find_jdk_artifact() {
 	# Prefer the JDK image (pattern: *jdk_*.tar.gz or *jdk_*.zip)
 	# Exclude jre/testimage/debugimage/static-libs variants
+	# BUILD_OUTPUT_DIR is injected by the pipeline from stage-constants.properties.
+	local artifacts_dir="${INPUT_ARTIFACTS_DIR}/${BUILD_OUTPUT_DIR}"
 	local artifact
-	artifact=$(find "${INPUT_ARTIFACTS_DIR}" \
+	artifact=$(find "${artifacts_dir}" \
 		\( -name "*jdk_*.tar.gz" -o -name "*jdk_*.zip" \) \
 		! -name "*jre_*" \
 		! -name "*testimage*" \
@@ -194,10 +196,10 @@ find_jdk_artifact() {
 		sort | head -n 1)
 
 	if [[ -z "${artifact}" ]]; then
-		log_error "No JDK image artifact found in ${INPUT_ARTIFACTS_DIR}"
+		log_error "No JDK image artifact found in ${artifacts_dir}"
 		log_error "Expected pattern: *jdk_*.tar.gz or *jdk_*.zip"
 		log_error "Available files:"
-		find "${INPUT_ARTIFACTS_DIR}" \( -name "*.tar.gz" -o -name "*.zip" \) \
+		find "${artifacts_dir}" \( -name "*.tar.gz" -o -name "*.zip" \) \
 			-exec basename {} \; 2>/dev/null || true
 		exit 1
 	fi

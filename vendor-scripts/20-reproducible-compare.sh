@@ -225,15 +225,17 @@ zip) unzip -q "${UPSTREAM_JDK_FILE}" ;;
 esac
 log_info "Upstream JDK unpacked"
 
-# Find the locally built JDK in INPUT_ARTIFACTS_DIR
-log_info "Finding locally built JDK in: ${INPUT_ARTIFACTS_DIR}"
-BUILT_JDK_FILE=$(find "${INPUT_ARTIFACTS_DIR}" -name "OpenJDK*-jdk_*.${JDK_EXT}" | grep -v "sources\|debugimage\|testimage\|static-libs\|jre" | head -n 1)
+# Find the locally built JDK in INPUT_ARTIFACTS_DIR/BUILD_OUTPUT_DIR
+# BUILD_OUTPUT_DIR is injected by the pipeline from stage-constants.properties.
+BUILT_ARTIFACTS_DIR="${INPUT_ARTIFACTS_DIR}/${BUILD_OUTPUT_DIR}"
+log_info "Finding locally built JDK in: ${BUILT_ARTIFACTS_DIR}"
+BUILT_JDK_FILE=$(find "${BUILT_ARTIFACTS_DIR}" -name "OpenJDK*-jdk_*.${JDK_EXT}" | grep -v "sources\|debugimage\|testimage\|static-libs\|jre" | head -n 1)
 
 if [ -z "${BUILT_JDK_FILE}" ]; then
-	log_error "No locally built JDK found in ${INPUT_ARTIFACTS_DIR}"
+	log_error "No locally built JDK found in ${BUILT_ARTIFACTS_DIR}"
 	log_error "Expected pattern: OpenJDK*-jdk_*.${JDK_EXT}"
-	log_error "Files found in ${INPUT_ARTIFACTS_DIR}:"
-	ls -la "${INPUT_ARTIFACTS_DIR}"
+	log_error "Files found in ${BUILT_ARTIFACTS_DIR}:"
+	ls -la "${BUILT_ARTIFACTS_DIR}"
 	exit 1
 fi
 
