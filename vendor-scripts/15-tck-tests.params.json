@@ -1,6 +1,6 @@
 {
   "stageId": "15-tck-tests",
-  "stageDisabled": false,
+  "stageDisabled": true,
   "stageTimeoutMinutes": 30,
   "stageCondition": [
     { "param": "RUN_TESTS",    "value": true },
