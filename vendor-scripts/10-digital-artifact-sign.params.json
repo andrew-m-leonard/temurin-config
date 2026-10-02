@@ -6,10 +6,10 @@
     { "param": "SIGN_ARTIFACTS", "value": true }
   ],
   "stageInputArtifacts": [
-    "**/*"
+    "${BUILD_OUTPUT_DIR}/*"
   ],
   "stageOutputArtifacts": [
-    "*.sig"
+    "${BUILD_OUTPUT_DIR}/*.sig"
   ],
   "description": "Temurin GPG signing stage. Triggers sign_temurin_gpg downstream job, copies .sig files back into TARGET_DIR, and archives them. Gated on SIGN_ARTIFACTS being true.",
   "parameterGroups": [

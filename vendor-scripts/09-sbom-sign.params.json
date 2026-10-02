@@ -7,10 +7,10 @@
     { "param": "CREATE_SBOM",    "value": true }
   ],
   "stageInputArtifacts": [
-    "*sbom*.json"
+    "${BUILD_OUTPUT_DIR}/*sbom*.json"
   ],
   "stageOutputArtifacts": [
-    "*sbom*.json"
+    "${BUILD_OUTPUT_DIR}/*sbom*.json"
   ],
   "description": "Temurin SBOM JSF signing stage. Builds SBOM signing libraries, triggers sign_temurin_jsf, copies signed SBOM JSON files back into TARGET_DIR, and archives them. Gated on both SIGN_ARTIFACTS and CREATE_SBOM being true.",
   "parameterGroups": [

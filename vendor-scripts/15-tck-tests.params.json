@@ -8,9 +8,8 @@
     { "param": "RELEASE_TYPE", "value": "regex:^(RELEASE|WEEKLY)$" }
   ],
   "stageInputArtifacts": [
-    "*.tar.gz",
-    "*.zip",
-    "metadata/**/*"
+    "${BUILD_OUTPUT_DIR}/*.tar.gz",
+    "${BUILD_OUTPUT_DIR}/*.zip"
   ],
   "stageOutputArtifacts": [],
   "description": "Temurin TCK test stage. Triggers AQA_Test_Pipeline_JCK asynchronously with the archived JDK URL. Gated on ENABLE_TCK being true and RELEASE_TYPE being RELEASE or WEEKLY.",
