@@ -57,8 +57,16 @@ int call(Map config) {
     // RELEASE: true only for RELEASE builds
     boolean release = (releaseType == 'RELEASE')
 
-    // DRY_RUN: always true for RELEASE (safety gate), always false for WEEKLY
-    boolean dryRun = (releaseType == 'RELEASE')
+    // ⚠️  TEMPORARY SAFETY OVERRIDE — DRY_RUN is hard-coded to true until the new
+    // pipeline has been fully validated.  Remove this line and restore the original
+    // logic below once confirmed safe:
+    //   boolean dryRun = (releaseType == 'RELEASE')
+    boolean dryRun = true
+    echo '╔══════════════════════════════════════════════════════════════════╗'
+    echo '║  WARNING: DRY_RUN is hard-coded TRUE in 16-publish.groovy.      ║'
+    echo '║  No artifacts will actually be published.                        ║'
+    echo '║  Remove the override once the new pipeline is fully validated.   ║'
+    echo '╚══════════════════════════════════════════════════════════════════╝'
 
     // TAG: use OVERRIDE_PUBLISH_NAME when set by the trigger pipeline (it already
     // has the correct form, e.g. "jdk-21.0.5+11-ea").  Fall back to deriving from
@@ -107,7 +115,7 @@ int call(Map config) {
 
     // ── Trigger downstream publish job ────────────────────────────────────────
     Object result = build(
-        job: 'build-scripts/job/release/job/aaaaaarefactor_openjdk_release_tool',
+        job: 'build-scripts/job/release/job/refactor_openjdk_release_tool',
         parameters: [
             booleanParam(name: 'RELEASE',              value: release),
             booleanParam(name: 'DRY_RUN',              value: dryRun),
