@@ -44,7 +44,7 @@
 #   {
 #     "shouldTrigger":   true,
 #     "scmRef":          "",
-#     "releaseType":     "Weekly",
+#     "releaseType":     "WEEKLY",
 #     "dedupBuildType":  "NONE"
 #   }
 
@@ -80,7 +80,7 @@ main() {
 	${TRIGGER_UTILS} write-trigger-result "${TARGET_DIR}" \
 		"shouldTrigger=true" \
 		"scmRef=" \
-		"releaseType=Weekly" \
+		"releaseType=WEEKLY" \
 		"dedupBuildType=NONE"
 
 	log_info "trigger-result.json written to ${TARGET_DIR}"
