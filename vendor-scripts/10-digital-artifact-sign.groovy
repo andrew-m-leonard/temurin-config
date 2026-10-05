@@ -40,8 +40,8 @@
  *   def script = load(found.path)
  *   exitCode = script(config) ?: EXIT_SUCCESS
  */
+@SuppressWarnings('UnusedMethodParameter')
 int call(Map config) {
-
     // ── Gate check ────────────────────────────────────────────────────────────
     String signArtifacts = env.SIGN_ARTIFACTS ?: ''
     if (signArtifacts.toLowerCase() != 'true') {
@@ -49,7 +49,7 @@ int call(Map config) {
         return 0
     }
 
-    echo "=== Temurin Digital Artifact Sign Stage ==="
+    echo '=== Temurin Digital Artifact Sign Stage ==='
     echo "  UPSTREAM_JOB_NAME  : ${env.JOB_NAME}"
     echo "  UPSTREAM_JOB_NUMBER: ${env.BUILD_NUMBER}"
     echo "  TARGET_DIR         : ${env.TARGET_DIR}"
@@ -59,7 +59,7 @@ int call(Map config) {
     if (!buildOutputDir) {
         error('BUILD_OUTPUT_DIR is not set — ensure stage-constants.properties is present and loaded')
     }
-    def signJob = build(
+    Object signJob = build(
         job: 'build-scripts/release/sign_temurin_gpg',
         parameters: [
             string(name: 'UPSTREAM_JOB_NUMBER', value: env.BUILD_NUMBER ?: ''),
@@ -70,7 +70,7 @@ int call(Map config) {
         propagate: true
     )
 
-    echo "sign_temurin_gpg job completed: build #${signJob.getNumber()}"
+    echo "sign_temurin_gpg job completed: build #${signJob.number}"
 
     // ── Copy .sig artifacts back from the sign job ────────────────────────────
     String targetBuildOutput = "${env.TARGET_DIR}/${buildOutputDir}"
@@ -78,14 +78,14 @@ int call(Map config) {
 
     copyArtifacts(
         projectName:          'build-scripts/release/sign_temurin_gpg',
-        selector:             specific("${signJob.getNumber()}"),
+        selector:             specific("${signJob.number}"),
         filter:               '**/*.sig',
         fingerprintArtifacts: true,
         target:               targetBuildOutput,
         flatten:              true
     )
 
-    echo "✅ Digital artifact signing complete"
+    echo '✅ Digital artifact signing complete'
     return 0
 }
 

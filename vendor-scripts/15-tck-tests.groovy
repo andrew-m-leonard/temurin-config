@@ -42,8 +42,8 @@
  *   def script = load(found.path)
  *   exitCode = script(config) ?: EXIT_SUCCESS
  */
+@SuppressWarnings('UnusedMethodParameter')
 int call(Map config) {
-
     // ── Gate check ────────────────────────────────────────────────────────────
     String runTests    = env.RUN_TESTS     ?: ''
     String enableTck   = env.ENABLE_TCK    ?: ''
@@ -101,7 +101,7 @@ int call(Map config) {
     String sdkUrl = "${buildUrl}artifact/${buildOutputDir}/${jdkFileName}"
 
     // ── Log resolved parameters ───────────────────────────────────────────────
-    echo "=== TCK Test Stage ==="
+    echo '=== TCK Test Stage ==='
     echo "  JDK_VERSIONS       : ${jdkVersion}"
     echo "  BUILD_TYPE         : ${buildType}"
     echo "  PLATFORMS          : ${archOsList}"
@@ -112,7 +112,7 @@ int call(Map config) {
         String displayName = "jdk${jdkVersion} : ${scmRef} : ${buildType} : ${archOsList}"
         echo "Triggering AQA_Test_Pipeline_JCK : ${displayName}"
 
-        def jckJob = build(
+        Object jckJob = build(
             job: 'AQA_Test_Pipeline_JCK',
             parameters: [
                 string(name: 'SDK_RESOURCE',          value: 'customized'),
@@ -133,14 +133,13 @@ int call(Map config) {
             link = "<a href='${env.JENKINS_URL}job/AQA_Test_Pipeline_JCK/'>AQA_Test_Pipeline_JCK (no build number available)</a>"
         }
         currentBuild.description = (currentBuild.description ?: '') + "<br>${link}"
-
     } catch (Exception e) {
         echo "❌ Failed to trigger TCK tests: ${e.message}"
         currentBuild.result = 'FAILURE'
         return 1
     }
 
-    echo "✅ TCK test pipeline triggered"
+    echo '✅ TCK test pipeline triggered'
     return 0
 }
 

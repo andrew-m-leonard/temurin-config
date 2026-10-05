@@ -32,8 +32,8 @@
  *   def script = load(found.path)
  *   exitCode = script(config) ?: EXIT_SUCCESS
  */
+@SuppressWarnings('UnusedMethodParameter')
 int call(Map config) {
-
     // ── Gate check ────────────────────────────────────────────────────────────
     String publishArtifacts = env.PUBLISH_ARTIFACTS ?: ''
     String releaseType      = env.RELEASE_TYPE      ?: ''
@@ -48,7 +48,7 @@ int call(Map config) {
         return 0
     }
     if (!scmRef) {
-        echo "ℹ️  16-publish: SCM_REF is not set — skipping"
+        echo 'ℹ️  16-publish: SCM_REF is not set — skipping'
         return 0
     }
 
@@ -93,7 +93,7 @@ int call(Map config) {
     String artifactsToCopy = resolveArtifactsToCopy(targetOs)
 
     // ── Log resolved parameters ───────────────────────────────────────────────
-    echo "=== Temurin Publish Stage ==="
+    echo '=== Temurin Publish Stage ==='
     echo "  RELEASE_TYPE       : ${releaseType}"
     echo "  RELEASE            : ${release}"
     echo "  DRY_RUN            : ${dryRun}"
@@ -106,7 +106,7 @@ int call(Map config) {
     echo "  ARTIFACTS_TO_COPY  : ${artifactsToCopy}"
 
     // ── Trigger downstream publish job ────────────────────────────────────────
-    def result = build(
+    Object result = build(
         job: 'build-scripts/job/release/job/aaaaaarefactor_openjdk_release_tool',
         parameters: [
             booleanParam(name: 'RELEASE',              value: release),
@@ -129,7 +129,7 @@ int call(Map config) {
         return 1
     }
 
-    echo "✅ Publish job completed successfully"
+    echo '✅ Publish job completed successfully'
     return 0
 }
 
@@ -162,7 +162,7 @@ String resolveArtifactsToCopy(String targetOs) {
     String artifactsDir = "${inputDir}/${buildOutputDir}"
     List artifacts = []
     extensions.each { String ext ->
-        def found = sh(
+        String found = sh(
             script: "find '${artifactsDir}' -maxdepth 1 -name 'OpenJDK*${ext}' -printf '%f\\n' 2>/dev/null || true",
             returnStdout: true
         ).trim()

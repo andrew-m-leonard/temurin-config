@@ -42,8 +42,8 @@
  *   def script = load(found.path)
  *   exitCode = script(config) ?: EXIT_SUCCESS
  */
+@SuppressWarnings('UnusedMethodParameter')
 int call(Map config) {
-
     // ── Gate check ────────────────────────────────────────────────────────────
     String signArtifacts = env.SIGN_ARTIFACTS ?: ''
     String createSbom    = env.CREATE_SBOM    ?: ''
@@ -57,40 +57,40 @@ int call(Map config) {
         return 0
     }
 
-    echo "=== Temurin SBOM Sign Stage ==="
+    echo '=== Temurin SBOM Sign Stage ==='
     echo "  UPSTREAM_JOB_NAME  : ${env.JOB_NAME}"
     echo "  UPSTREAM_JOB_NUMBER: ${env.BUILD_NUMBER}"
     echo "  TARGET_DIR         : ${env.TARGET_DIR}"
 
     // ── Build SBOM signing libraries ──────────────────────────────────────────
-    echo "Building SBOM signing libraries (build_sign_sbom_libraries)..."
-    def buildSBOMLibrariesJob = build(
+    echo 'Building SBOM signing libraries (build_sign_sbom_libraries)...'
+    Object buildSBOMLibrariesJob = build(
         job:       'build_sign_sbom_libraries',
         wait:      true,
         propagate: true
     )
 
-    echo "build_sign_sbom_libraries completed: build #${buildSBOMLibrariesJob.getNumber()}"
+    echo "build_sign_sbom_libraries completed: build #${buildSBOMLibrariesJob.number}"
 
     // ── Trigger sign_temurin_jsf downstream job ───────────────────────────────
-    echo "Triggering sign_temurin_jsf..."
+    echo 'Triggering sign_temurin_jsf...'
     String buildOutputDir = env.BUILD_OUTPUT_DIR
     if (!buildOutputDir) {
         error('BUILD_OUTPUT_DIR is not set — ensure stage-constants.properties is present and loaded')
     }
-    def signSBOMJob = build(
+    Object signSBOMJob = build(
         job: 'build-scripts/release/sign_temurin_jsf',
         parameters: [
             string(name: 'UPSTREAM_JOB_NUMBER',    value: env.BUILD_NUMBER                              ?: ''),
             string(name: 'UPSTREAM_JOB_NAME',      value: env.JOB_NAME                                 ?: ''),
             string(name: 'UPSTREAM_DIR',            value: buildOutputDir),
-            string(name: 'SBOM_LIBRARY_JOB_NUMBER', value: "${buildSBOMLibrariesJob.getNumber()}"),
+            string(name: 'SBOM_LIBRARY_JOB_NUMBER', value: "${buildSBOMLibrariesJob.number}"),
         ],
         wait:      true,
         propagate: true
     )
 
-    echo "sign_temurin_jsf job completed: build #${signSBOMJob.getNumber()}"
+    echo "sign_temurin_jsf job completed: build #${signSBOMJob.number}"
 
     // ── Copy signed SBOM artifacts back ───────────────────────────────────────
     String targetBuildOutput = "${env.TARGET_DIR}/${buildOutputDir}"
@@ -98,14 +98,14 @@ int call(Map config) {
 
     copyArtifacts(
         projectName:          'build-scripts/release/sign_temurin_jsf',
-        selector:             specific("${signSBOMJob.getNumber()}"),
+        selector:             specific("${signSBOMJob.number}"),
         filter:               "artifacts/${buildOutputDir}/*sbom*.json",
         fingerprintArtifacts: true,
         target:               targetBuildOutput,
         flatten:              true
     )
 
-    echo "✅ SBOM signing complete"
+    echo '✅ SBOM signing complete'
     return 0
 }
 
