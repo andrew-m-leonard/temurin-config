@@ -51,9 +51,9 @@
 set -euo pipefail
 
 PIPELINE_LIB="${PIPELINE_ROOT:-${WORKSPACE}}/scripts/lib"
-# shellcheck source=scripts/lib/logging-utils.sh
+# shellcheck disable=SC1091
 source "${PIPELINE_LIB}/logging-utils.sh"
-# shellcheck source=scripts/lib/config-utils.sh
+# shellcheck disable=SC1091
 source "${PIPELINE_LIB}/config-utils.sh"
 
 TRIGGER_UTILS="${PIPELINE_LIB}/python-runner.sh ${PIPELINE_LIB}/trigger-utils.py"
