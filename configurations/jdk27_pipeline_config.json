@@ -151,6 +151,6 @@
   "targetConfigurations": [
     "x86-64_linux"
   ],
-  "openjdkVersion": "jdk27",
+  "openjdkVersion": "jdk27u",
   "enabled": true
 }
