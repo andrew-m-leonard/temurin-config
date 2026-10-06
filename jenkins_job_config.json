@@ -1,5 +1,5 @@
 {
-  "pipelineBaseFolder": "andrew-pipeline-sandbox",
+  "pipelineBaseFolder": "Adoptium_Pipelines",
   "jenkinsfilePath": "ci/jenkins/Jenkinsfile.declarative",
   "pipelineTimeoutHours": 25,
   "stageAgentLabels": {
