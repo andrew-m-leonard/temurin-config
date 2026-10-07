@@ -125,6 +125,7 @@ limitations under the License.
 // ---------------------------------------------------------------------------
 
 pipeline {
+    // Must have recent Python3
     agent ci.role.worker
 
     // NOTE: Do NOT declare any of the seed parameters in a parameters{} block here.
@@ -309,7 +310,9 @@ pipeline {
                         params.CONFIG_REPO_BRANCH.trim(),
                         env.PIPELINES_COMMIT_SHA,
                         pipelineBaseFolder,
-                        'config-repo'
+                        'config-repo',
+                        env.PIPELINES_REPO_URL    ?: '',
+                        env.PIPELINES_REPO_BRANCH ?: ''
                     )
                 }
             }
