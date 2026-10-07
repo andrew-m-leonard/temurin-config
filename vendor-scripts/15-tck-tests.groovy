@@ -133,6 +133,8 @@ int call(Map config) {
             link = "<a href='${env.JENKINS_URL}job/AQA_Test_Pipeline_JCK/'>AQA_Test_Pipeline_JCK (no build number available)</a>"
         }
         currentBuild.description = (currentBuild.description ?: '') + "<br>${link}"
+    } catch (org.jenkinsci.plugins.workflow.steps.FlowInterruptedException e) {
+        throw e
     } catch (Exception e) {
         echo "❌ Failed to trigger TCK tests: ${e.message}"
         currentBuild.result = 'FAILURE'
