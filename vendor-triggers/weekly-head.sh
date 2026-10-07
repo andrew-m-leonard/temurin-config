@@ -18,15 +18,6 @@
 # Does no tag detection — simply signals that a build should be triggered
 # for the HEAD of the given version.
 #
-# This script exists as a vendor override point. Vendors that need pre-trigger
-# logic before a weekly HEAD build can replace it via:
-#   config-repo/vendor-triggers/weekly-head.sh
-#
-# Jenkinsfile.trigger handles the weekly-head type as a built-in when this
-# script is absent — so the script is optional. When present its output is
-# honoured, allowing a vendor override to suppress a weekly build by writing
-# shouldTrigger=false (e.g. during a release freeze).
-#
 # Required env:
 #   WORKSPACE                    — working directory
 #   TARGET_DIR                   — directory to write trigger-result.json
