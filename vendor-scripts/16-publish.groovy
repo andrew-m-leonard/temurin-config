@@ -146,7 +146,9 @@ int call(Map config) {
  * INPUT_ARTIFACTS_DIR that match the OS-specific extensions.
  *
  * @param targetOs  The CONFIG_TARGET_OS value: "linux", "windows", or "mac"
- * @return Comma-separated list of matching basenames beginning with "OpenJDK"
+ * @return Comma-separated list of matching artifact paths under ${BUILD_OUTPUT_DIR}
+ *         beginning with "OpenJDK" (e.g. "${BUILD_OUTPUT_DIR}/OpenJDK..."), suitable
+ *         for consumption as an Ant pattern filter over the upstream artifact archive.
  */
 String resolveArtifactsToCopy(String targetOs) {
     List extensions
@@ -175,7 +177,11 @@ String resolveArtifactsToCopy(String targetOs) {
             returnStdout: true
         ).trim()
         if (found) {
-            found.split('\n').each { String name -> if (name) { artifacts << name } }
+            found.split('\n').each { String name ->
+                if (name) {
+                    artifacts << "${buildOutputDir}/${name}"
+                }
+            }
         }
     }
 
