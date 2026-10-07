@@ -23,9 +23,9 @@ ci-temurin-config/
 │   ├── jdk28_pipeline_config.json
 │   └── ...  (jdk15–jdk24 present but disabled)
 └── vendor-scripts/                      # Temurin-specific stage script overrides
-    ├── 12-validate-sbom.sh
-    ├── 13-smoke-tests.sh
-    └── 20-reproducible-compare.sh
+    ├── 120-validate-sbom.sh
+    ├── 130-smoke-tests.sh
+    └── 200-reproducible-compare.sh
 ```
 
 ---
@@ -86,7 +86,7 @@ One file per JDK version. Defines the platform build matrix for that version. To
 | `dockerFile` | string or variant-map | Path to a Dockerfile override |
 | `crossCompile` | string | Cross-compile host arch or emulator (e.g. `"x64"`, `"qemustatic"`) |
 | `configureArgs` | string or variant-map | Arguments appended to OpenJDK `configure` |
-| `buildArgs` | string or variant-map | Arguments passed to `make-adopt-build-farm.sh` / `02-build.sh` |
+| `buildArgs` | string or variant-map | Arguments passed to `make-adopt-build-farm.sh` / `020-build.sh` |
 | `test` | string or object | `"default"` for the standard suite; an object with release-type keys (`nightly`, `weekly`, `release`) for selective suites |
 | `additionalTestLabels` | string or variant-map | AQA test node label expressions |
 | `additionalTestParams` | variant-map of objects | Extra AQA parameters per variant (e.g. `{ "temurin": { "CLOUD_PROVIDER": "azure" } }`) |
@@ -140,7 +140,7 @@ One file per JDK version. Defines the platform build matrix for that version. To
 
 The `vendor-scripts/` directory contains Temurin-specific overrides for pipeline stage scripts. At runtime the stage resolver checks this directory first; if a matching script is found it takes priority over the default stub in `ci-adoptium-pipelines/scripts/stages/`.
 
-### `13-smoke-tests.sh`
+### `130-smoke-tests.sh`
 
 Runs the AQA `extended.functional` / `functional/buildAndPackage` test suite against the freshly built JDK. Clones `aqa-tests`, runs `get.sh` to pull in `temurin-build` functional tests, then invokes `make compile && make _extended.functional` via the TKG test framework.
 
@@ -150,14 +150,14 @@ Sources `${PIPELINE_ROOT}/scripts/lib/logging-utils.sh` and `config-utils.sh` fr
 **Reads from config:** `JAVA_TO_BUILD`, `TARGET_OS`, `ARCHITECTURE`, `repoDefaults.aqaRef`, `repoDefaults.aqaRepoUrl`, `repoDefaults.buildRef`, `repoDefaults.buildRepoUrl`
 **Outputs:** TKG result tree in `TARGET_DIR/`, `TARGET_DIR/smoke-test-summary.json`
 
-### `12-validate-sbom.sh`
+### `120-validate-sbom.sh`
 
 Validates SBOM JSON files produced by the Build stage. Clones `temurin-build` and invokes `tooling/validateSBOM.sh` against every `*sbom*.json` file found in `INPUT_ARTIFACTS_DIR`. Only meaningful when `--create-sbom` is in `buildArgs`.
 
 **Required env:** `WORKSPACE`, `CONFIG_FILE`, `INPUT_ARTIFACTS_DIR`, `TARGET_DIR`
 **Optional env:** `TEMURIN_BUILD_REPO`, `TEMURIN_BUILD_BRANCH`, `JAVA_VERSION`, `SCM_REF`
 
-### `20-reproducible-compare.sh`
+### `200-reproducible-compare.sh`
 
 Downloads the published Adoptium production binary for the same version from `api.adoptium.net`, unpacks both the production and locally built JDKs, then delegates to `temurin-build/tooling/reproducible/repro_compare.sh` for byte-level comparison.
 

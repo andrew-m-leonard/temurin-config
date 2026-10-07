@@ -15,7 +15,7 @@
 set -euo pipefail
 
 ################################################################################
-# Temurin Vendor Implementation: 20-reproducible-compare
+# Temurin Vendor Implementation: 200-reproducible-compare
 #
 # Compares a locally built JDK against the published Adoptium production binary
 # for the same version to verify reproducibility. Clones temurin-build and
@@ -55,7 +55,7 @@ log_section "Stage 20: Temurin Reproducible Build Comparison"
 # Validate standard environment (WORKSPACE, CONFIG_FILE, TARGET_DIR)
 validate_standard_environment
 
-# Derive RELEASE boolean from RELEASE_TYPE (consistent with 02-build.sh)
+# Derive RELEASE boolean from RELEASE_TYPE (consistent with 020-build.sh)
 RELEASE="$([[ "${RELEASE_TYPE:-NIGHTLY}" == "RELEASE" ]] && echo "true" || echo "false")"
 
 # SCM_REF must be explicitly provided — there is no meaningful default for this

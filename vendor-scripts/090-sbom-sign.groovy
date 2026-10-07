@@ -12,16 +12,16 @@
  * limitations under the License.
  */
 /**
- * Temurin Vendor Implementation: 09-sbom-sign
+ * Temurin Vendor Implementation: 090-sbom-sign
  *
  * JSF-signs the SBOM by triggering the downstream sign_temurin_jsf job and
  * copying the resulting signed SBOM JSON files back into TARGET_DIR for
- * archiving.  Must run before 10-digital-artifact-sign so the signed SBOM is
+ * archiving.  Must run before 100-digital-artifact-sign so the signed SBOM is
  * included in the set of artifacts that receive a detached GPG signature.
  *
  * Equivalent to the legacy jsfSignSBOM() function in openjdk_build_pipeline.groovy.
  *
- * Gate conditions (enforced by stageCondition in 09-sbom-sign.params.json):
+ * Gate conditions (enforced by stageCondition in 090-sbom-sign.params.json):
  *   - SIGN_ARTIFACTS must be true
  *   - CREATE_SBOM    must be true
  *
@@ -49,11 +49,11 @@ int call(Map config) {
     String createSbom    = env.CREATE_SBOM    ?: ''
 
     if (signArtifacts.toLowerCase() != 'true') {
-        echo "ℹ️  09-sbom-sign: SIGN_ARTIFACTS='${signArtifacts}' is not true — skipping"
+        echo "ℹ️  090-sbom-sign: SIGN_ARTIFACTS='${signArtifacts}' is not true — skipping"
         return 0
     }
     if (createSbom.toLowerCase() != 'true') {
-        echo "ℹ️  09-sbom-sign: CREATE_SBOM='${createSbom}' is not true — skipping"
+        echo "ℹ️  090-sbom-sign: CREATE_SBOM='${createSbom}' is not true — skipping"
         return 0
     }
 

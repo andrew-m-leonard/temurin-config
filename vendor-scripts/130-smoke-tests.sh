@@ -84,7 +84,7 @@ main() {
 
 	# -----------------------------------------------------------------------
 	# Override build repo/ref from build-metadata.json when available.
-	# The 02-build stage records the *actual* ref used after any SBOM-driven
+	# The 020-build stage records the *actual* ref used after any SBOM-driven
 	# override, which may differ from what was supplied as a stage parameter.
 	# This ensures we test against the exact source that produced the artifact.
 	# -----------------------------------------------------------------------

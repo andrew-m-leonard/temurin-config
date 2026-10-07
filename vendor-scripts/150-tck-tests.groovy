@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 /**
- * Temurin Vendor Implementation: 15-tck-tests
+ * Temurin Vendor Implementation: 150-tck-tests
  *
  * Triggers the downstream AQA_Test_Pipeline_JCK job with the archived JDK URL.
  * The job is fired asynchronously (wait:false / waitForStart:true) and a link
@@ -22,7 +22,7 @@
  * Equivalent to the legacy remoteTriggerJckTests(jdkFileName) function in
  * openjdk_build_pipeline.groovy.
  *
- * Gate conditions (enforced by stageCondition in 15-tck-tests.params.json):
+ * Gate conditions (enforced by stageCondition in 150-tck-tests.params.json):
  *   - ENABLE_TCK   must be true
  *   - RELEASE_TYPE must be RELEASE or WEEKLY
  *
@@ -50,15 +50,15 @@ int call(Map config) {
     String releaseType = (env.RELEASE_TYPE ?: '').toUpperCase()
 
     if (runTests.toLowerCase() != 'true') {
-        echo "ℹ️  15-tck-tests: RUN_TESTS='${runTests}' is not true — skipping"
+        echo "ℹ️  150-tck-tests: RUN_TESTS='${runTests}' is not true — skipping"
         return 0
     }
     if (enableTck.toLowerCase() != 'true') {
-        echo "ℹ️  15-tck-tests: ENABLE_TCK='${enableTck}' is not true — skipping"
+        echo "ℹ️  150-tck-tests: ENABLE_TCK='${enableTck}' is not true — skipping"
         return 0
     }
     if (!(releaseType in ['RELEASE', 'WEEKLY'])) {
-        echo "ℹ️  15-tck-tests: RELEASE_TYPE='${releaseType}' is not RELEASE or WEEKLY — skipping"
+        echo "ℹ️  150-tck-tests: RELEASE_TYPE='${releaseType}' is not RELEASE or WEEKLY — skipping"
         return 0
     }
 
@@ -93,7 +93,7 @@ int call(Map config) {
     ).trim()
 
     if (!jdkFileName) {
-        echo "❌ 15-tck-tests: no JDK archive (OpenJDK*-jdk_*.${extension}) found in ${artifactsDir}"
+        echo "❌ 150-tck-tests: no JDK archive (OpenJDK*-jdk_*.${extension}) found in ${artifactsDir}"
         currentBuild.result = 'FAILURE'
         return 1
     }

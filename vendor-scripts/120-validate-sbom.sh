@@ -15,7 +15,7 @@
 set -euo pipefail
 
 ################################################################################
-# Temurin Vendor Implementation: 12-validate-sbom
+# Temurin Vendor Implementation: 120-validate-sbom
 #
 # Validates SBOM (Software Bill of Materials) files produced during the Build
 # stage. Clones temurin-build and delegates to tooling/validateSBOM.sh.

@@ -1,5 +1,5 @@
 {
-  "stageId": "12-validate-sbom",
+  "stageId": "120-validate-sbom",
   "stageDisabled": false,
   "stageTimeoutMinutes": 30,
   "stageCondition": [

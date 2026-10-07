@@ -1,5 +1,5 @@
 {
-  "stageId": "09-sbom-sign",
+  "stageId": "090-sbom-sign",
   "stageDisabled": false,
   "stageTimeoutMinutes": 60,
   "stageCondition": [

@@ -12,13 +12,13 @@
  * limitations under the License.
  */
 /**
- * Temurin Vendor Implementation: 16-publish
+ * Temurin Vendor Implementation: 190-publish
  *
  * Triggers the downstream Temurin publish job
  * (build-scripts/job/release/job/refactor_openjdk_release_tool) with the
  * parameters derived from the current build context.
  *
- * Gate conditions (enforced in 16-publish.params.json stageCondition, but also
+ * Gate conditions (enforced in 190-publish.params.json stageCondition, but also
  * checked here for defence-in-depth):
  *   - RELEASE_TYPE must be "RELEASE" or "WEEKLY"
  *   - SCM_REF must be non-empty
@@ -40,15 +40,15 @@ int call(Map config) {
     String scmRef           = env.SCM_REF            ?: ''
 
     if (publishArtifacts.toLowerCase() != 'true') {
-        echo "ℹ️  16-publish: PUBLISH_ARTIFACTS='${publishArtifacts}' is not true — skipping"
+        echo "ℹ️  190-publish: PUBLISH_ARTIFACTS='${publishArtifacts}' is not true — skipping"
         return 0
     }
     if (!(releaseType in ['RELEASE', 'WEEKLY'])) {
-        echo "ℹ️  16-publish: RELEASE_TYPE='${releaseType}' is not RELEASE or WEEKLY — skipping"
+        echo "ℹ️  190-publish: RELEASE_TYPE='${releaseType}' is not RELEASE or WEEKLY — skipping"
         return 0
     }
     if (!scmRef) {
-        echo 'ℹ️  16-publish: SCM_REF is not set — skipping'
+        echo 'ℹ️  190-publish: SCM_REF is not set — skipping'
         return 0
     }
 
@@ -63,7 +63,7 @@ int call(Map config) {
     //   boolean dryRun = (releaseType == 'RELEASE')
     boolean dryRun = true
     echo '╔══════════════════════════════════════════════════════════════════╗'
-    echo '║  WARNING: DRY_RUN is hard-coded TRUE in 16-publish.groovy.      ║'
+    echo '║  WARNING: DRY_RUN is hard-coded TRUE in 190-publish.groovy.      ║'
     echo '║  No artifacts will actually be published.                        ║'
     echo '║  Remove the override once the new pipeline is fully validated.   ║'
     echo '╚══════════════════════════════════════════════════════════════════╝'

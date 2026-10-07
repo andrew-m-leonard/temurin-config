@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 /**
- * Temurin Vendor Implementation: 10-digital-artifact-sign
+ * Temurin Vendor Implementation: 100-digital-artifact-sign
  *
  * Applies detached GPG signatures (.sig) to all build artifacts by triggering
  * the downstream sign_temurin_gpg job and copying the resulting .sig files
@@ -20,7 +20,7 @@
  *
  * Equivalent to the legacy gpgSign() function in openjdk_build_pipeline.groovy.
  *
- * Gate condition (enforced by stageCondition in 10-digital-artifact-sign.params.json):
+ * Gate condition (enforced by stageCondition in 100-digital-artifact-sign.params.json):
  *   - SIGN_ARTIFACTS must be true
  *
  * Environment Variables (set by StageScriptRunner.run() via withEnv):
@@ -45,7 +45,7 @@ int call(Map config) {
     // ── Gate check ────────────────────────────────────────────────────────────
     String signArtifacts = env.SIGN_ARTIFACTS ?: ''
     if (signArtifacts.toLowerCase() != 'true') {
-        echo "ℹ️  10-digital-artifact-sign: SIGN_ARTIFACTS='${signArtifacts}' is not true — skipping"
+        echo "ℹ️  100-digital-artifact-sign: SIGN_ARTIFACTS='${signArtifacts}' is not true — skipping"
         return 0
     }
 

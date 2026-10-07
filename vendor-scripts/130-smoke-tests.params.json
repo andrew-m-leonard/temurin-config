@@ -1,5 +1,5 @@
 {
-  "stageId": "13-smoke-tests",
+  "stageId": "130-smoke-tests",
   "stageDisabled": false,
   "stageTimeoutMinutes": 0,
   "stageCondition": [
