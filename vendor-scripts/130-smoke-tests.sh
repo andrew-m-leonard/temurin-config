@@ -156,8 +156,8 @@ main() {
 	cd "${aqa_dir}"
 	bash get.sh \
 		--vendor_repos "${temurin_build_repo}" \
-		"${vendor_branch_arg[@]}" \
-		"${vendor_sha_arg[@]}" \
+		"${vendor_branch_arg[@]+"${vendor_branch_arg[@]}"}" \
+		"${vendor_sha_arg[@]+"${vendor_sha_arg[@]}"}" \
 		--vendor_dirs "${TEMURIN_FUNCTIONAL_DIR}" \
 		--clone_openj9 true
 
