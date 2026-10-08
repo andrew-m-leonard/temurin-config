@@ -140,11 +140,24 @@ main() {
 	# -----------------------------------------------------------------------
 	# Run get.sh to pull in temurin-build functional tests
 	# -----------------------------------------------------------------------
+	# get.sh --vendor_branches passes the value as `-b <branch>` to git clone, which
+	# only accepts branch/tag names — not bare commit SHAs.  When the resolved ref is
+	# a full 40-hex SHA (e.g. recorded by build-metadata.json after an SBOM override),
+	# pass it via --vendor_shas instead so get.sh clones HEAD then checks out the SHA.
+	local vendor_branch_arg=()
+	local vendor_sha_arg=()
+	if [[ "${temurin_build_branch}" =~ ^[0-9a-f]{40}$ ]]; then
+		vendor_sha_arg=(--vendor_shas "${temurin_build_branch}")
+	else
+		vendor_branch_arg=(--vendor_branches "${temurin_build_branch}")
+	fi
+
 	log_section "Running aqa-tests get.sh"
 	cd "${aqa_dir}"
 	bash get.sh \
 		--vendor_repos "${temurin_build_repo}" \
-		--vendor_branches "${temurin_build_branch}" \
+		"${vendor_branch_arg[@]}" \
+		"${vendor_sha_arg[@]}" \
 		--vendor_dirs "${TEMURIN_FUNCTIONAL_DIR}" \
 		--clone_openj9 true
 
