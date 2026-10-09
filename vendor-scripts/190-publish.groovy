@@ -15,7 +15,7 @@
  * Temurin Vendor Implementation: 190-publish
  *
  * Triggers the downstream Temurin publish job
- * (build-scripts/job/release/job/refactor_openjdk_release_tool) with the
+ * (build-scripts/release/refactor_openjdk_release_tool) with the
  * parameters derived from the current build context.
  *
  * Gate conditions (enforced in 190-publish.params.json stageCondition, but also
@@ -115,7 +115,7 @@ int call(Map config) {
 
     // ── Trigger downstream publish job ────────────────────────────────────────
     Object result = build(
-        job: 'build-scripts/job/release/job/refactor_openjdk_release_tool',
+        job: 'build-scripts/release/refactor_openjdk_release_tool',
         parameters: [
             booleanParam(name: 'RELEASE',              value: release),
             booleanParam(name: 'DRY_RUN',              value: dryRun),
