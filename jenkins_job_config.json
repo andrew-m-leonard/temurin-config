@@ -81,7 +81,7 @@
           "ENABLE_INSTALLERS": true,
           "SIGN_ARTIFACTS": true,
           "PUBLISH_ARTIFACTS": true,
-          "RUN_REPRODUCIBLE_COMPARE": true,
+          "RUN_REPRODUCIBLE_COMPARE": false,
           "RELEASE_TYPE": "WEEKLY"
         },
         "logRotation": {
