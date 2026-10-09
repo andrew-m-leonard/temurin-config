@@ -91,8 +91,9 @@ int call(Map config) {
     String upstreamJobName   = env.JOB_NAME    ?: ''
     String upstreamJobNumber = env.BUILD_NUMBER ?: ''
 
-    // VERSION: the JDK major version string (e.g. "21")
-    String version = env.JDK_VERSION ?: ''
+    // VERSION: the release-tool repo version string (e.g. "jdk21"), matching
+    // the format produced by determineReleaseToolRepoVersion() in the legacy pipeline.
+    String version = env.JDK_VERSION ? "jdk${env.JDK_VERSION}" : ''
 
     // TARGET_OS: resolved from the pipeline config by ConfigHelper
     String targetOs = env.CONFIG_TARGET_OS ?: ''
